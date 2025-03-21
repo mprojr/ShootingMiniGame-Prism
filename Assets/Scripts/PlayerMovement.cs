@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,32 +16,29 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded;
     private float nextFireTime = 0f;
     private InputSystem_Actions inputActions;
-    private Vector2 moveInput;
-    private Vector2 lookInput;
+    // private Vector2 moveInput;
+    // private Vector2 lookInput;
     private float pitch = 0f;
     private Transform playerCamera;
     private Vector3 storedVelocity; // Store velocity during pause
+    public InputActionReference moveAction;
+    private Vector3 initialOffset;
 
     void Awake()
     {
         inputActions = new InputSystem_Actions();
 
-        inputActions.Player.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
-        inputActions.Player.Move.canceled += ctx => moveInput = Vector2.zero;
+        inputActions.Player.Jump.performed += ctx => Shoot();
+        //inputActions.Player.Shoot.performed += ctx => Shoot();
 
-        inputActions.Player.Jump.performed += ctx => Jump();
-        inputActions.Player.Shoot.performed += ctx => Shoot();
-        inputActions.Player.Look.performed += ctx => lookInput = ctx.ReadValue<Vector2>();
-        inputActions.Player.Look.canceled += ctx => lookInput = Vector2.zero;
-
-        playerCamera = transform.Find("PlayerCamera");
-        if (playerCamera == null)
+        playerCamera = GameObject.Find("CenterEyeAnchor")?.transform;
+        if (playerCamera != null)
         {
-            Debug.LogError("PlayerCamera not found! Please add a Camera as a child of the Player named 'PlayerCamera'.");
+            Debug.Log("VR Headset (CenterEyeAnchor) found!");
         }
         else
         {
-            Debug.Log("PlayerCamera found successfully!");
+            Debug.LogError("VR Headset not found! Check OVRCameraRig.");
         }
     }
 
@@ -59,20 +57,55 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+
+        transform.position = playerCamera.position;
+        initialOffset = transform.position - playerCamera.position;
+        Debug.Log($"[START] Player Spawned at {transform.position}, Camera at {playerCamera.position}, Offset: {initialOffset}");
     }
 
     void Update()
     {
-        Vector3 moveDirection = new Vector3(moveInput.x, 0f, moveInput.y).normalized;
-        moveDirection = transform.TransformDirection(moveDirection);
+        if (playerCamera == null) return;
+
+        // Move player (capsule) based on real-world movement
+        Vector3 targetPosition = playerCamera.position + initialOffset;
+        targetPosition.y = transform.position.y;
+
+        Vector3 direction = targetPosition - transform.position;
+        float stopThreshold = 0.01f;
+        float distance = direction.magnitude;
+
+
+        if (distance > stopThreshold) // Only move if not close enough
+        {
+            Vector3 moveStep = direction.normalized * moveSpeed * Time.deltaTime;
+
+            // Ensure we don't overshoot the target
+            if (moveStep.magnitude > distance)
+            {
+                transform.position = targetPosition;
+            }
+            else
+            {
+                transform.position += moveStep;
+            }
+        }
+
+        //Debug.Log($"Target: {targetPosition}, Current: {transform.position}, Distance: {distance}");
+
+        // Optional joystick movement
+        /*
+        Vector2 input = moveAction.action.ReadValue<Vector2>();
+        Vector3 moveDirection = new Vector3(input.x, 0, input.y);
+        moveDirection = playerCamera.TransformDirection(moveDirection);
         moveDirection.y = 0f;
+        transform.position += moveDirection * moveSpeed * Time.deltaTime;
+        */
 
-        Vector3 movement = moveDirection * moveSpeed * Time.deltaTime;
-        rb.MovePosition(rb.position + movement);
-
-        HandleLook();
     }
 
+    /*
     void HandleLook()
     {
         float yaw = lookInput.x * lookSensitivity;
@@ -93,9 +126,11 @@ public class PlayerMovement : MonoBehaviour
             Debug.LogWarning("PlayerCamera is null!");
         }
     }
+    */
 
     void Jump()
     {
+        Debug.Log("JUMP BUTTON");
         if (isGrounded && Time.timeScale != 0f)
         {
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpForce, rb.linearVelocity.z);
@@ -106,6 +141,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Shoot()
     {
+        Debug.Log("Shoot Function");
         if (Time.time >= nextFireTime && Time.timeScale != 0f)
         {
             if (bulletPrefab != null && firePoint != null)
@@ -117,7 +153,10 @@ public class PlayerMovement : MonoBehaviour
                 }
 
                 // Instantiate the bullet at the fire point’s position and rotation
-                GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+                Vector3 spawnPosition = firePoint.position + firePoint.up * 0.5f; // Adjust the height offset (0.5f)
+                Quaternion bulletRotation = firePoint.rotation * Quaternion.Euler(90f, 0f, 0f); // Rotate capsule to point forward
+
+                GameObject bullet = Instantiate(bulletPrefab, spawnPosition, bulletRotation);
                 Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
                 if (bulletRb != null)
                 {
