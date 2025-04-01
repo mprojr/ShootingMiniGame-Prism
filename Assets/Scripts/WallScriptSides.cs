@@ -6,12 +6,15 @@ public class WallScriptSides : MonoBehaviour
     public GameObject WallDot;
     public int numberOfDots = 5;
     public float spawnDuration = 3.0f;
+    Collider wall_collider;
+    Vector3 wall_size;
 
     void Start()
     {
+        wall_collider = GetComponent<MeshCollider>();
+        wall_size = wall_collider.bounds.size;
         StartCoroutine(SpawnDotsOverTime());
     }
-
 
     void Update()
     {
@@ -26,8 +29,9 @@ public class WallScriptSides : MonoBehaviour
         for (int i = 0; i < numberOfDots; i++)
         {
 
-            float z = Random.Range(-4.5f, 4.5f);
-            float y = Random.Range(-2.0f, 2.0f);
+            float z = Random.Range(-wall_size.z / 2, wall_size.z / 2);
+            float y = Random.Range(-wall_size.y / 2, wall_size.y / 2);
+
             Vector3 spawnPosition = transform.position + new Vector3(0, y, z);
 
             Instantiate(WallDot, spawnPosition, Quaternion.identity);
