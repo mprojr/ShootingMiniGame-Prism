@@ -58,7 +58,7 @@ public class WallDotMovement : MonoBehaviour
         } else if (other.CompareTag("Bullet"))
         {
             StartCoroutine(ShrinkAndDestroy(Color.blue));
-            Destroy(other.gameObject);
+            //Destroy(other.gameObject);
         }
     }
 

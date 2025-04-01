@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 899034240820841784}
   - component: {fileID: 3381851376068153980}
   - component: {fileID: -3069006288741726814}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WallDot
-  m_TagString: Untagged
+  m_TagString: WallDot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

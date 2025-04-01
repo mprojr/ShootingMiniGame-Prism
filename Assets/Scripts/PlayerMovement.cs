@@ -6,29 +6,27 @@ public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float jumpForce = 5f;
-    public GameObject bulletPrefab;
-    public Transform firePoint;     // Point from which bullets are fired (assign in Inspector)
-    public float fireRate = 0.5f;   // Time between shots
+    //public GameObject bulletPrefab;
+    //public Transform firePointL;
+    //public Transform firePointR;// Point from which bullets are fired (assign in Inspector)
+    //public float fireRateL = 0.5f;   // Time between shots
+    //public float fireRateR = 0.5f;
     public float lookSensitivity = 10f;
     public float maxLookAngle = 80f;
+    //public float bulletSpeed = 20f;
 
     private Rigidbody rb;
-    private bool isGrounded;
-    private float nextFireTime = 0f;
-    private InputSystem_Actions inputActions;
-    // private Vector2 moveInput;
-    // private Vector2 lookInput;
-    private float pitch = 0f;
     private Transform playerCamera;
-    private Vector3 storedVelocity; // Store velocity during pause
     public InputActionReference moveAction;
     private Vector3 initialOffset;
+    // private float nextFireTimeL = 0f;
+    // private float nextFireTimeR = 0f;
 
     void Awake()
     {
-        inputActions = new InputSystem_Actions();
+        // inputActions = new InputSystem_Actions();
 
-        inputActions.Player.Jump.performed += ctx => Shoot();
+        // inputActions.Player.Jump.performed += ctx => Shoot();
         //inputActions.Player.Shoot.performed += ctx => Shoot();
 
         playerCamera = GameObject.Find("CenterEyeAnchor")?.transform;
@@ -42,15 +40,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void OnEnable()
-    {
-        inputActions.Player.Enable();
-    }
 
-    void OnDisable()
-    {
-        inputActions.Player.Disable();
-    }
 
     void Start()
     {
@@ -92,110 +82,36 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        //Debug.Log($"Target: {targetPosition}, Current: {transform.position}, Distance: {distance}");
 
-        // Optional joystick movement
+        // float triggerLeft = OVRInput.Get(OVRInput.RawAxis1D.LIndexTrigger);
+        float triggerRight = OVRInput.Get(OVRInput.RawAxis1D.RIndexTrigger);
+
         /*
-        Vector2 input = moveAction.action.ReadValue<Vector2>();
-        Vector3 moveDirection = new Vector3(input.x, 0, input.y);
-        moveDirection = playerCamera.TransformDirection(moveDirection);
-        moveDirection.y = 0f;
-        transform.position += moveDirection * moveSpeed * Time.deltaTime;
+        if (triggerLeft > 0.9f & Time.time >= nextFireTimeL)
+        {
+            nextFireTimeL = Time.time + fireRateL;
+            GameObject bullet = Instantiate(bulletPrefab, firePointL.position, firePointL.rotation);
+            bullet.transform.Rotate(Vector3.right * 90f);
+            Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
+            bulletRb.linearVelocity = firePointL.forward * bulletSpeed;
+            Destroy(bullet, 3);
+        }
         */
 
-    }
-
-    /*
-    void HandleLook()
-    {
-        float yaw = lookInput.x * lookSensitivity;
-        transform.Rotate(0, yaw, 0);
-
-        if (playerCamera != null)
+        /*
+        if (triggerRight > 0.9f & Time.time >= nextFireTimeR)
         {
-            float pitchChange = lookInput.y * lookSensitivity;
-            pitch -= pitchChange;
-            pitch = Mathf.Clamp(pitch, -maxLookAngle, maxLookAngle);
-            playerCamera.localRotation = Quaternion.Euler(pitch, 0, 0);
-            // Optionally, align firePoint with camera for shooting direction
-            firePoint.localRotation = Quaternion.Euler(pitch, 0, 0); // Match camera pitch
-            Debug.Log($"Look Input Y: {lookInput.y}, Pitch: {pitch}, Camera X Rotation: {playerCamera.localEulerAngles.x}, FirePoint Forward: {firePoint.forward}");
+            nextFireTimeR = Time.time + fireRateR;
+            GameObject bullet = Instantiate(bulletPrefab, firePointR.position, firePointR.rotation);
+            bullet.transform.Rotate(Vector3.right * 90f);
+            Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
+            bulletRb.linearVelocity = firePointR.forward * bulletSpeed;
+            Destroy(bullet, 3);
         }
-        else
-        {
-            Debug.LogWarning("PlayerCamera is null!");
-        }
-    }
-    */
-
-    void Jump()
-    {
-        Debug.Log("JUMP BUTTON");
-        if (isGrounded && Time.timeScale != 0f)
-        {
-            rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpForce, rb.linearVelocity.z);
-            isGrounded = false;
-            Debug.Log("Jump applied with velocity: " + rb.linearVelocity);
-        }
-    }
-
-    void Shoot()
-    {
-        Debug.Log("Shoot Function");
-        if (Time.time >= nextFireTime && Time.timeScale != 0f)
-        {
-            if (bulletPrefab != null && firePoint != null)
-            {
-                // Align firePoint with camera direction before shooting
-                if (playerCamera != null)
-                {
-                    firePoint.rotation = playerCamera.rotation; // Use camera's full rotation (yaw + pitch)
-                }
-
-                // Instantiate the bullet at the fire point’s position and rotation
-                Vector3 spawnPosition = firePoint.position + firePoint.up * 0.5f; // Adjust the height offset (0.5f)
-                Quaternion bulletRotation = firePoint.rotation * Quaternion.Euler(90f, 0f, 0f); // Rotate capsule to point forward
-
-                GameObject bullet = Instantiate(bulletPrefab, spawnPosition, bulletRotation);
-                Rigidbody bulletRb = bullet.GetComponent<Rigidbody>();
-                if (bulletRb != null)
-                {
-                    // Set bullet velocity in the fire point’s forward direction
-                    bulletRb.linearVelocity = firePoint.forward * 20f; // Bullet speed: 20 units/second
-                }
-                // Destroy the bullet after 2 seconds if it doesn’t hit anything
-                Destroy(bullet, 2f);
-            }
-            nextFireTime = Time.time + fireRate;
-        }
-    }
-
-    void OnCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-        }
-    }
-
-    void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = false;
-        }
-    }
-
-    // Public methods for BoundaryCheck to call
-    public void StoreVelocity()
-    {
-        storedVelocity = rb.linearVelocity;
-        Debug.Log("Stored velocity: " + storedVelocity);
-    }
-
-    public void RestoreVelocity()
-    {
-        rb.linearVelocity = new Vector3(storedVelocity.x, Mathf.Min(storedVelocity.y, jumpForce), storedVelocity.z);
-        Debug.Log("Restored velocity: " + rb.linearVelocity);
+        */
     }
 }
+
+
+
+
