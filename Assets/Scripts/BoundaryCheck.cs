@@ -43,6 +43,7 @@ public class BoundaryCheck : MonoBehaviour
         Time.timeScale = 1f;
     }
 
+    /*
     void Update()
     {
         Vector3 playerPosition = transform.position; // Player's position
@@ -83,6 +84,8 @@ public class BoundaryCheck : MonoBehaviour
             }
         }
     }
+    
+    */
 
     private void ManualUnpause()
     {
