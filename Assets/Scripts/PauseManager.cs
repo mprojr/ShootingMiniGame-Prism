@@ -18,7 +18,7 @@ public class PauseManager : MonoBehaviour
     
     [Header("VR Input Settings")]
     [Tooltip("Which controller button to use for pause")]
-    public OVRInput.Button pauseButton = OVRInput.Button.Start;
+    public OVRInput.Button pauseButton = OVRInput.Button.Two;
     
     private bool isPaused = false;
     private InputSystem_Actions inputActions;
@@ -68,9 +68,17 @@ public class PauseManager : MonoBehaviour
             TogglePause();
         }
         
-        // Check for Meta/Oculus controller input
-        if (OVRInput.GetDown(pauseButton))
+        // Add debug logging to check if controller input is being detected
+        if (OVRInput.Get(OVRInput.Button.Two, OVRInput.Controller.RTouch))
         {
+            Debug.Log("B button is being pressed!");
+        }
+        
+        // Check for Meta/Oculus controller input with more explicit parameters
+        if (OVRInput.GetDown(OVRInput.Button.Two, OVRInput.Controller.RTouch) || 
+            OVRInput.GetDown(OVRInput.Button.Two, OVRInput.Controller.All))
+        {
+            Debug.Log("B button press detected - toggling pause");
             TogglePause();
         }
     }
