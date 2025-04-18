@@ -4,7 +4,7 @@ Group: Prism
 
 // Group Members //
 Ayyan - [GitHub](https://github.com/ayyan67)
-Alifyah - [GitHub](https://github.com/alifyah-m)
+Alifyah Hussain - [GitHub](https://github.com/alifyah-m)
 Jason Nguyen - [GitHub](https://github.com/JasonNguyen47)
 Danyal Khan - [GitHub](https://github.com/DanyalKhan21)
 Kevin Le - [GitHub](https://github.com/keb-web)
