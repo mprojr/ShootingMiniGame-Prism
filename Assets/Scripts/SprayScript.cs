@@ -12,10 +12,21 @@ public class SprayScript : MonoBehaviour
     void Start()
     {
         currentSize = transform.localScale.x;
+        
+        // Check if layers exist before using them
         int bulletLayer = LayerMask.NameToLayer("Bullet");
         int defaultLayer = LayerMask.NameToLayer("Default");
-        Physics.IgnoreLayerCollision(bulletLayer, bulletLayer, true);
-        Physics.IgnoreLayerCollision(bulletLayer, defaultLayer, true);
+        
+        // Only ignore collisions if the layers exist (not -1)
+        if (bulletLayer != -1 && defaultLayer != -1)
+        {
+            Physics.IgnoreLayerCollision(bulletLayer, bulletLayer, true);
+            Physics.IgnoreLayerCollision(bulletLayer, defaultLayer, true);
+        }
+        else
+        {
+            Debug.LogWarning("Layer 'Bullet' or 'Default' not found. Please create these layers in your project settings.");
+        }
 
         Destroy(gameObject, lifeTime);
     }
