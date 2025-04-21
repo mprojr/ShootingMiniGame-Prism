@@ -483,7 +483,7 @@ GameObject:
   - component: {fileID: 2390298423038155496}
   - component: {fileID: 8027154450141974161}
   m_Layer: 0
-  m_Name: LeftTwoHandGun
+  m_Name: TwoHandSpray
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -536,7 +536,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd1d10da95b4d84c9c33f0a412bf190, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 4408682444002166761, guid: 05b32b8db809bc64483052c83595de1c, type: 3}
+  bulletPrefab: {fileID: 4939384177208392562, guid: a17452ed333515046b4787cbf21d94c1, type: 3}
   backHandle: {fileID: 3522577022331891422}
   firePointL: {fileID: 4711130582086448885}
   fireRateL: 0.25

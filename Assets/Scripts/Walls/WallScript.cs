@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class WallScriptFlat : MonoBehaviour
+public class WallScript : MonoBehaviour, ISpawnZone
 {
     public GameObject WallDot;
     public int numberOfDots = 5;
@@ -18,7 +18,13 @@ public class WallScriptFlat : MonoBehaviour
 
     void Update()
     {
-
+        
+    }
+    public void Configure(int dotsToSpawn, float duration)
+    {
+        numberOfDots = dotsToSpawn;
+        spawnDuration = duration;
+        StartCoroutine(SpawnDotsOverTime());
     }
 
     IEnumerator SpawnDotsOverTime()
@@ -28,11 +34,10 @@ public class WallScriptFlat : MonoBehaviour
 
         for (int i = 0; i < numberOfDots; i++)
         {
-
-            float z = Random.Range(-wall_size.z / 2, wall_size.z / 2);
             float x = Random.Range(-wall_size.x / 2, wall_size.x / 2);
+            float y = Random.Range(-wall_size.y / 2, wall_size.y / 2);
 
-            Vector3 spawnPosition = transform.position + new Vector3(x, 0, z);
+            Vector3 spawnPosition = transform.position + new Vector3(x, y, 0);
 
             Instantiate(WallDot, spawnPosition, Quaternion.identity);
 
@@ -42,8 +47,8 @@ public class WallScriptFlat : MonoBehaviour
             if (totalTime > spawnDuration) break;
 
             yield return new WaitForSeconds(randomDelay);
-
-
+            
+            
         }
     }
 

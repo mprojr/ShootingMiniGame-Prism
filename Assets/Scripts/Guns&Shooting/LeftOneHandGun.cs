@@ -31,5 +31,6 @@ public class LeftOneHandGun : MonoBehaviour
             Destroy(bullet, 3);
         }
 
+
     }
 }

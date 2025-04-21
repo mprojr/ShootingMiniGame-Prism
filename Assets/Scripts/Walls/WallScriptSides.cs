@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class WallScriptSides : MonoBehaviour
+public class WallScriptSides : MonoBehaviour, ISpawnZone
 {
     public GameObject WallDot;
     public int numberOfDots = 5;
@@ -13,12 +13,19 @@ public class WallScriptSides : MonoBehaviour
     {
         wall_collider = GetComponent<MeshCollider>();
         wall_size = wall_collider.bounds.size;
-        StartCoroutine(SpawnDotsOverTime());
+        //StartCoroutine(SpawnDotsOverTime());
     }
 
     void Update()
     {
 
+    }
+
+    public void Configure(int dotsToSpawn, float duration)
+    {
+        numberOfDots = dotsToSpawn;
+        spawnDuration = duration;
+        StartCoroutine(SpawnDotsOverTime());
     }
 
     IEnumerator SpawnDotsOverTime()
@@ -35,6 +42,7 @@ public class WallScriptSides : MonoBehaviour
             Vector3 spawnPosition = transform.position + new Vector3(0, y, z);
 
             Instantiate(WallDot, spawnPosition, Quaternion.identity);
+
 
             float randomDelay = Random.Range(0, maxDelay);
             totalTime += randomDelay;

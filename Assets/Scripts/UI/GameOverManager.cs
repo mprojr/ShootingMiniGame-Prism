@@ -22,7 +22,7 @@ public class GameOverManager : MonoBehaviour
     public AudioSource gameOverSound;
     
     private Camera mainCamera;
-    private int currentScore;
+    private int currentScore = 1; // Default
     private bool isShowing = false;
 
     void Start()

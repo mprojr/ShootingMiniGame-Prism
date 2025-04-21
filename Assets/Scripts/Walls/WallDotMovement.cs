@@ -16,6 +16,7 @@ public class WallDotMovement : MonoBehaviour
         if (playerCamera == null)
         {
             playerCamera = GameObject.FindGameObjectWithTag("Player");
+            //Debug.Log("FOUND THE PLAYER FROM WALLDOTMOV");
         }
         StartCoroutine(GrowStage());
     }
@@ -55,6 +56,7 @@ public class WallDotMovement : MonoBehaviour
         {
             shrinking = true;
             StartCoroutine(ShrinkAndDestroy(Color.red));
+            GameManager.Instance.TakeDamage(1);
         } else if (other.CompareTag("Bullet"))
         {
             StartCoroutine(ShrinkAndDestroy(Color.blue));
