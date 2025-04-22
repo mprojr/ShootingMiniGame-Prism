@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 public class WallDotMovement : MonoBehaviour
 {
     public GameObject playerCamera;
-    public float speed = 2.0f;
+    public float speed = 3.0f;
     private bool isMoving = false;
     private bool shrinking = false;
     private Renderer dotRenderer;
@@ -18,6 +18,8 @@ public class WallDotMovement : MonoBehaviour
             playerCamera = GameObject.FindGameObjectWithTag("Player");
             //Debug.Log("FOUND THE PLAYER FROM WALLDOTMOV");
         }
+        speed = speed * GameManager.Instance.wallDotSpeedFactor;
+        Debug.Log($"New WallDot with Speed: {speed}");
         StartCoroutine(GrowStage());
     }
 
@@ -82,4 +84,19 @@ public class WallDotMovement : MonoBehaviour
 
         Destroy(gameObject);
     }
+
+    public void ApplySpeedMultiplier(float multiplier, float duration)
+    {
+        StartCoroutine(SpeedMultiplierRoutine(multiplier, duration));
+    }
+
+    IEnumerator SpeedMultiplierRoutine(float multiplier, float duration)
+    {
+        float originalSpeed = speed;
+        speed = originalSpeed * multiplier;
+        yield return new WaitForSeconds(duration);
+        speed = originalSpeed;
+    }
+
+
 }

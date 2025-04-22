@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -20,12 +21,19 @@ public class GameManager : MonoBehaviour
     public int currentStage = 0;
     public int diffcultLevel = 0;
 
-    public GameObject[] gunPrefabs; // Drag all your gun prefabs into this in the Inspector
+    public GameObject[] gunPrefabs; 
     private Dictionary<string, GameObject> gunPrefabDict = new Dictionary<string, GameObject>();
 
     // Debuging 
     public bool forceReplace = false;
 
+    // Passive Perks
+    public float fireSpeedFactor = 1f;
+    public float bulletSizeFactor = 1f;
+    public float wallDotSpeedFactor = 1f;
+
+    // Abilities 
+    public bool isInvincible = false;
 
     void Start()
     {
@@ -89,6 +97,34 @@ public class GameManager : MonoBehaviour
             Debug.Log("L is being Pressed");
             GameManager.Instance.LoadScene("GarageLevel");
         }
+
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            Debug.Log("I is being Pressed");
+            GameManager.Instance.AddAttackSpeed(0.9f);
+        }
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            Debug.Log("O is being Pressed");
+            GameManager.Instance.AddBulletSize(1.2f);
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Debug.Log("P is being Pressed");
+            GameManager.Instance.LowerWallDotSpeed(0.1f);
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            Debug.Log("B is being Pressed");
+            GameManager.Instance.AddMaxHealth(2);
+        }
+
+
     }
 
     public void LoadScene(string sceneName)
@@ -110,7 +146,16 @@ public class GameManager : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+
+        if (isInvincible)
+        {
+            Debug.Log("No Damage Taken because of Invincible");
+            return;
+        }
+            
+
         currentHealth -= damage;
+
         currentHealth = Mathf.Max(currentHealth, 0); 
         Debug.Log($"Player took {damage} damage. Current Health: {currentHealth}");
 
@@ -143,5 +188,69 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
     */
+
+    // The Passive Perks Funcitons 
+
+    public void ResetAllBuffs()
+    {
+        fireSpeedFactor = 0f;
+        bulletSizeFactor = 0f;
+        // ... reset others too
+    }
+
+    public void AddAttackSpeed(float amount)
+    {
+        fireSpeedFactor *= amount;
+        Debug.Log($"Passive Attack Speed increased by {amount}. Total: {fireSpeedFactor}");
+    }
+
+    public void AddBulletSize(float amount)
+    {
+        bulletSizeFactor *= amount;
+        Debug.Log($"Passive Bullet Size increased by {amount}. Total: {bulletSizeFactor}");
+    }
+
+    public void LowerWallDotSpeed(float amount)
+    {
+        wallDotSpeedFactor -= amount;
+        Debug.Log($"Wall Dot Speed decreased by {amount}. Total: {wallDotSpeedFactor}");
+    }
+
+    public void AddMaxHealth(int amount)
+    {
+        maxHealth += amount;
+        Debug.Log($"Maximum health increased by {amount}. Total: {maxHealth}");
+    }
+
+    // For the double bullet size ability 
+    public void BulletSizeAbility(float multiplier, float duration)
+    {
+        StartCoroutine(BulletSizeBoost(multiplier, duration));
+    }
+
+
+    IEnumerator BulletSizeBoost(float multiplier, float duration)
+    {
+        float originalbulletSizeFactor = bulletSizeFactor;
+        bulletSizeFactor = originalbulletSizeFactor * multiplier;
+
+        yield return new WaitForSeconds(duration);
+        bulletSizeFactor = originalbulletSizeFactor;
+    }
+
+    public void ActivateInvincibility(float duration)
+    {
+        StartCoroutine(InvincibilityRoutine(duration));
+    }
+
+
+    IEnumerator InvincibilityRoutine(float duration)
+    {
+        isInvincible = true;
+
+        yield return new WaitForSeconds(duration);
+
+        isInvincible = false;
+    }
 
 }

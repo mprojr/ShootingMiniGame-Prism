@@ -13,7 +13,7 @@ public class WallScript : MonoBehaviour, ISpawnZone
     {
         wall_collider = GetComponent<MeshCollider>();
         wall_size = wall_collider.bounds.size;
-        StartCoroutine(SpawnDotsOverTime());
+        //StartCoroutine(SpawnDotsOverTime());
     }
 
     void Update()
