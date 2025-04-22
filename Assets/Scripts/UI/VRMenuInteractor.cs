@@ -10,6 +10,7 @@ public class VRMenuInteractor : MonoBehaviour
     public float interactionDistance = 20f;
     public GameObject laserPointer;
     public GameObject pointerDot;
+    public OVRInput.Button triggerButton = OVRInput.Button.PrimaryIndexTrigger;
     
     [Header("Visual Feedback")]
     public Color normalColor = Color.white;
@@ -18,7 +19,8 @@ public class VRMenuInteractor : MonoBehaviour
     public LayerMask uiLayerMask;  // Set to layer containing UI elements
 
     private LineRenderer laserLine;
-    private Button currentButton;
+    [HideInInspector]
+    public Button currentButton;
     private OVRInputModule inputModule;
     
     void Start()
@@ -110,6 +112,7 @@ public class VRMenuInteractor : MonoBehaviour
             if (button != null && button.interactable)
             {
                 hitButton = button;
+                Debug.Log("Pointing at button: " + button.name);
                 break;
             }
         }
@@ -128,11 +131,10 @@ public class VRMenuInteractor : MonoBehaviour
             }
             
             // Handle click with OVR trigger or testing with mouse
-            if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger) || 
-                Input.GetMouseButtonDown(0))
+            if (OVRInput.GetDown(triggerButton) || Input.GetMouseButtonDown(0))
             {
+                Debug.Log("Clicking button: " + currentButton.name);
                 currentButton.onClick.Invoke();
-                Debug.Log("Button clicked: " + currentButton.name);
             }
         }
         else if (currentButton != null)
