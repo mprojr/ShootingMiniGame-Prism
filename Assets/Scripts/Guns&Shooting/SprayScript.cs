@@ -4,7 +4,7 @@ using UnityEngine;
 public class SprayScript : MonoBehaviour
 {
     public float growRate = 1.5f;
-    public float maxSize = 3f;
+    public float maxSize = 100f;
     public float lifeTime = 5f;
 
     private float currentSize = 1f;

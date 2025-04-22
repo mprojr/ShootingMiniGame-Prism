@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static PlayerAbility;
 
 public class GameManager : MonoBehaviour
 {
@@ -33,6 +34,7 @@ public class GameManager : MonoBehaviour
     public float wallDotSpeedFactor = 1f;
 
     // Abilities 
+    public AbilityType selectedAbility = AbilityType.SlowAllWallDots;
     public bool isInvincible = false;
 
     void Start()

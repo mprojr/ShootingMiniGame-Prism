@@ -6,10 +6,23 @@ public class PlayerAbility : MonoBehaviour
 
     public float abilityCooldown = 5f;
     private float nextAbilityTime = 0f;
+    public AbilityType currentAbility = AbilityType.None;
+    
+
+    public enum AbilityType
+    {
+        None,
+        Invincibility,
+        DoubleBulletSize,
+        DoubleFireRate,
+        SlowAllWallDots
+    }
+    
 
     void Start()
     {
-        
+        currentAbility = GameManager.Instance.selectedAbility;
+        Debug.Log($"Current Selected Ability: {currentAbility}");
     }
 
     // Update is called once per frame
@@ -24,16 +37,49 @@ public class PlayerAbility : MonoBehaviour
 
     }
 
+
+
     void UseAbility()
     {
         Debug.Log("Ability used!");
 
-        ActivatInvincible(10f);
-        // DoubleBulletSize(2f, 5f);
-        // DoubleFireRate(0.5f, 5f);
-        // SlowAllWallDots(0.20f, 3f);
+        ScreenTintController tint = FindObjectOfType<ScreenTintController>();
 
+        if (tint == null)
+        {
+            Debug.Log("Tint is not being found");
+        }
+        else
+        {
+            Debug.Log("Tint is found");
+        }
 
+        switch (currentAbility)
+        {
+            case AbilityType.Invincibility:
+                ActivatInvincible(10f);
+                tint?.ShowTint(Color.yellow, 10f);
+                break;
+
+            case AbilityType.DoubleBulletSize:
+                DoubleBulletSize(2f, 5f);
+                tint?.ShowTint(Color.cyan, 5f);
+                break;
+
+            case AbilityType.DoubleFireRate:
+                DoubleFireRate(0.5f, 5f);
+                tint?.ShowTint(Color.red, 5f);
+                break;
+
+            case AbilityType.SlowAllWallDots:
+                SlowAllWallDots(0.2f, 3f);
+                tint?.ShowTint(Color.blue, 3f);
+                break;
+
+            default:
+                Debug.LogWarning("No ability assigned!");
+                break;
+        }
     }
 
 
