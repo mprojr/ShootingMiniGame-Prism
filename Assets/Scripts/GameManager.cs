@@ -149,10 +149,15 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.G))
         {
             Debug.Log("G is being Pressed");
-            GameManager.Instance.ShowRoomCompletePanel();
+            GameManager.Instance.ShowGameOverPanel();
         }
 
-        
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Debug.Log("G is being Pressed");
+            GameManager.Instance.RestartGame();
+        }
+
 
     }
 
@@ -397,5 +402,16 @@ public class GameManager : MonoBehaviour
     public void ShowRoomCompletePanel()
     {
         roomCompletePanel.SetActive(true);
+    }
+
+    public void RestartGame()
+    {
+        ResetAllBuffs();
+        currentStage = 0;
+        diffcultLevel = 0;
+        currentHealth = maxHealth;
+
+        SceneManager.LoadScene(0);
+        Debug.Log("Game restarted. Loaded scene 0.");
     }
 }
