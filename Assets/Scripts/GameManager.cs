@@ -37,6 +37,14 @@ public class GameManager : MonoBehaviour
     public AbilityType selectedAbility = AbilityType.SlowAllWallDots;
     public bool isInvincible = false;
 
+    // Menus
+    public GameObject menuPrefab;
+    private GameObject menuInstance;
+
+    public GameObject gameOverPanel;
+    public GameObject perkSelectPanel;
+    public GameObject roomCompletePanel;
+
     void Start()
     {
         currentStage = SceneManager.GetActiveScene().buildIndex;
@@ -64,6 +72,18 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             Debug.Log("Duplicate GameManager destroyed.");
         }
+
+        if (menuPrefab != null && menuInstance == null)
+        {
+            menuInstance = Instantiate(menuPrefab);
+            DontDestroyOnLoad(menuInstance); // Keeps menu alive across scenes
+
+            gameOverPanel = menuInstance.transform.Find("Canvas/Game Over")?.gameObject;
+            perkSelectPanel = menuInstance.transform.Find("Canvas/Select Perk")?.gameObject;
+            roomCompletePanel = menuInstance.transform.Find("Canvas/Next Room")?.gameObject;
+        }
+
+
 
     }
 
@@ -126,6 +146,13 @@ public class GameManager : MonoBehaviour
             GameManager.Instance.AddMaxHealth();
         }
 
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            Debug.Log("G is being Pressed");
+            GameManager.Instance.ShowRoomCompletePanel();
+        }
+
+        
 
     }
 
@@ -355,4 +382,20 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Helper functions for menus
+    public void ShowGameOverPanel()
+    {
+        gameOverPanel.SetActive(true);
+        Debug.Log("Hello From the ShowGameOverPanel Call");
+    }
+
+    public void ShowPerkSelectPanel()
+    {
+        perkSelectPanel.SetActive(true);
+    }
+
+    public void ShowRoomCompletePanel()
+    {
+        roomCompletePanel.SetActive(true);
+    }
 }
