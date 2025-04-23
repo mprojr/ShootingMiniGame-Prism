@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     public int currentStage = 0;
     public int diffcultLevel = 0;
 
-    public GameObject[] gunPrefabs; 
+    public GameObject[] gunPrefabs;
     private Dictionary<string, GameObject> gunPrefabDict = new Dictionary<string, GameObject>();
 
     // Debuging 
@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             Debug.Log("Duplicate GameManager destroyed.");
         }
-            
+
     }
 
 
@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
         {
             Debug.Log("L is being Pressed");
-            GameManager.Instance.LoadScene("GarageLevel");
+            GameManager.Instance.LoadScene();
         }
 
 
@@ -129,7 +129,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void LoadScene(string sceneName)
+    public void LoadScene()
     {
         int nextSceneIndex = currentStage + 1;
         if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
@@ -137,6 +137,8 @@ public class GameManager : MonoBehaviour
             currentStage = nextSceneIndex;
             diffcultLevel = currentStage;
             currentHealth = maxHealth;
+            Time.timeScale = 1f;
+
             SceneManager.LoadScene(nextSceneIndex);
             Debug.Log($"Loading next scene: index {nextSceneIndex}");
         }
@@ -154,11 +156,11 @@ public class GameManager : MonoBehaviour
             Debug.Log("No Damage Taken because of Invincible");
             return;
         }
-            
+
 
         currentHealth -= damage;
 
-        currentHealth = Mathf.Max(currentHealth, 0); 
+        currentHealth = Mathf.Max(currentHealth, 0);
         Debug.Log($"Player took {damage} damage. Current Health: {currentHealth}");
 
         if (currentHealth <= 0)
@@ -253,6 +255,101 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(duration);
 
         isInvincible = false;
+    }
+
+    // Helper functions to change the ability from the UI
+    public void SetAbilityToInvincibility()
+    {
+        selectedAbility = AbilityType.Invincibility;
+    }
+
+    public void SetAbilityToDoubleFireRate()
+    {
+        selectedAbility = AbilityType.DoubleFireRate;
+    }
+
+    public void SetAbilityToSlowAllWallDots()
+    {
+        selectedAbility = AbilityType.SlowAllWallDots;
+    }
+
+    // Helper functions for the gun setting in Menus
+
+    public void SetLeftHandSalt()
+    {
+        leftGun = "LeftHandSalt";
+        GunLoader gunLoader = FindObjectOfType<GunLoader>();
+        if (gunLoader != null)
+        {
+            gunLoader.LoadGuns();
+        }
+    }
+
+    public void SetLeftHandSpray()
+    {
+        leftGun = "LeftHandSpray";
+        GunLoader gunLoader = FindObjectOfType<GunLoader>();
+        if (gunLoader != null)
+        {
+            gunLoader.LoadGuns();
+        }
+    }
+
+    public void SetTwoHandSalt()
+    {
+        leftGun = "TwoHandSalt";
+        rightGun = "";
+        GunLoader gunLoader = FindObjectOfType<GunLoader>();
+        if (gunLoader != null)
+        {
+            gunLoader.LoadGuns();
+        }
+    }
+
+    public void SetTwoHandSpray()
+    {
+        leftGun = "TwoHandSpray";
+        rightGun = "";
+        GunLoader gunLoader = FindObjectOfType<GunLoader>();
+        if (gunLoader != null)
+        {
+            gunLoader.LoadGuns();
+        }
+    }
+
+    // --- RIGHT GUN SETTERS ---
+    public void SetRightHandSalt()
+    {
+        if (leftGun != "TwoHandSalt" && leftGun != "TwoHandSpray")
+        {
+            rightGun = "RightHandSalt";
+            GunLoader gunLoader = FindObjectOfType<GunLoader>();
+            if (gunLoader != null)
+            {
+                gunLoader.LoadGuns();
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Cannot set right gun while using a two-handed gun.");
+        }
+    }
+
+    public void SetRightHandSpray()
+    {
+        if (leftGun != "TwoHandSalt" && leftGun != "TwoHandSpray")
+        {
+            rightGun = "RightHandSpray";
+            GunLoader gunLoader = FindObjectOfType<GunLoader>();
+            if (gunLoader != null)
+            {
+                gunLoader.LoadGuns();
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Cannot set right gun while using a two-handed gun.");
+        }
     }
 
 }

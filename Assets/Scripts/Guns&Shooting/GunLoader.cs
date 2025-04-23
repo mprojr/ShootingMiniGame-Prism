@@ -6,9 +6,18 @@ public class GunLoader : MonoBehaviour
     private Transform leftHand;
     private Transform rightHand;
 
+    private GameObject currentLeftGun;
+    private GameObject currentRightGun;
 
-    void Start()
+    public void LoadGuns()
     {
+        // Destroy current guns first
+        if (currentLeftGun != null)
+            Destroy(currentLeftGun);
+
+        if (currentRightGun != null)
+            Destroy(currentRightGun);
+
         GameObject cameraRig = GameObject.Find("PlayerCamera");
 
         if (cameraRig != null)
@@ -22,21 +31,19 @@ public class GunLoader : MonoBehaviour
 
             if (leftHand != null && leftGunPrefab != null)
             {
-                print("Found the left hand");
-                Instantiate(leftGunPrefab, leftHand.position, leftHand.rotation, leftHand);
+                currentLeftGun = Instantiate(leftGunPrefab, leftHand.position, leftHand.rotation, leftHand);
             }
 
             if (rightHand != null && rightGunPrefab != null)
             {
-                print("Found the right hand");
-                Instantiate(rightGunPrefab, rightHand.position, rightHand.rotation, rightHand);
+                currentRightGun = Instantiate(rightGunPrefab, rightHand.position, rightHand.rotation, rightHand);
             }
+        }
+    }
 
-        }
-        else
-        {
-            Debug.LogWarning("OVRCameraRig not found in scene.");
-        }
+    void Start()
+    {
+        LoadGuns(); // Initial load
     }
 
     // Update is called once per frame

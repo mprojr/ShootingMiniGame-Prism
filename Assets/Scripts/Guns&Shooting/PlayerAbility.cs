@@ -28,6 +28,7 @@ public class PlayerAbility : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        currentAbility = GameManager.Instance.selectedAbility;
         if ((Input.GetKeyDown(KeyCode.E) || OVRInput.GetDown(OVRInput.Button.One)) && Time.time >= nextAbilityTime)
         {
             UseAbility();
