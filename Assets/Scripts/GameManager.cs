@@ -104,26 +104,26 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
             Debug.Log("I is being Pressed");
-            GameManager.Instance.AddAttackSpeed(0.9f);
+            GameManager.Instance.AddAttackSpeed();
         }
 
         if (Input.GetKeyDown(KeyCode.O))
         {
             Debug.Log("O is being Pressed");
-            GameManager.Instance.AddBulletSize(1.2f);
+            GameManager.Instance.AddBulletSize();
         }
 
         if (Input.GetKeyDown(KeyCode.P))
         {
             Debug.Log("P is being Pressed");
-            GameManager.Instance.LowerWallDotSpeed(0.1f);
+            GameManager.Instance.LowerWallDotSpeed();
         }
 
 
         if (Input.GetKeyDown(KeyCode.B))
         {
             Debug.Log("B is being Pressed");
-            GameManager.Instance.AddMaxHealth(2);
+            GameManager.Instance.AddMaxHealth();
         }
 
 
@@ -136,6 +136,7 @@ public class GameManager : MonoBehaviour
         {
             currentStage = nextSceneIndex;
             diffcultLevel = currentStage;
+            AddMaxHealth();
             currentHealth = maxHealth;
             Time.timeScale = 1f;
 
@@ -197,33 +198,35 @@ public class GameManager : MonoBehaviour
 
     public void ResetAllBuffs()
     {
-        fireSpeedFactor = 0f;
-        bulletSizeFactor = 0f;
-        // ... reset others too
+        fireSpeedFactor = 1f;
+        bulletSizeFactor = 1f;
+        maxHealth = 3;
+        currentHealth = 3;
+        wallDotSpeedFactor = 1f;
     }
 
-    public void AddAttackSpeed(float amount)
+    public void AddAttackSpeed()
     {
-        fireSpeedFactor *= amount;
-        Debug.Log($"Passive Attack Speed increased by {amount}. Total: {fireSpeedFactor}");
+        fireSpeedFactor *= 0.9f;
+        Debug.Log($"Passive Attack Speed increased by 0.9f. Total: {fireSpeedFactor} Perk Selected`");
     }
 
-    public void AddBulletSize(float amount)
+    public void AddBulletSize()
     {
-        bulletSizeFactor *= amount;
-        Debug.Log($"Passive Bullet Size increased by {amount}. Total: {bulletSizeFactor}");
+        bulletSizeFactor *= 1.2f;
+        Debug.Log($"Passive Bullet Size increased by 1.2f. Total: {bulletSizeFactor} Perk Selected");
     }
 
-    public void LowerWallDotSpeed(float amount)
+    public void LowerWallDotSpeed()
     {
-        wallDotSpeedFactor -= amount;
-        Debug.Log($"Wall Dot Speed decreased by {amount}. Total: {wallDotSpeedFactor}");
+        wallDotSpeedFactor -= 0.1f;
+        Debug.Log($"Wall Dot Speed decreased by 0.1f. Total: {wallDotSpeedFactor} Perk Selected");
     }
 
-    public void AddMaxHealth(int amount)
+    public void AddMaxHealth()
     {
-        maxHealth += amount;
-        Debug.Log($"Maximum health increased by {amount}. Total: {maxHealth}");
+        maxHealth += 2;
+        Debug.Log($"Maximum health increased by 2. Total: {maxHealth}");
     }
 
     // For the double bullet size ability 
