@@ -32,7 +32,6 @@ public class SpawnManager : MonoBehaviour
 
     private void TrySpawn()
     {
-        // Boss on its special wave
         if (currentWave == bossWave)
         {
             Spawn(bossPrefab);
@@ -40,20 +39,27 @@ public class SpawnManager : MonoBehaviour
             return;
         }
 
-        // Otherwise random pick
         float r = Random.value;
-        if (r < tankChance)          Spawn(tankPrefab);
+        if (r < tankChance)
+            Spawn(tankPrefab);
         else if (r < tankChance + fastChance)
-                                    Spawn(fastPrefab);
+            Spawn(fastPrefab);
         else if (r < tankChance + fastChance + healthChance)
-                                    Spawn(healthPrefab);
-        else                         Spawn(wallDotPrefab);
+            Spawn(healthPrefab);
+        else
+            Spawn(wallDotPrefab);
     }
 
     private void Spawn(GameObject prefab)
     {
-        // You can customize spawn location logic here
-        Vector3 spawnPos = /* e.g. Random.insideUnitCircle or a fixed point */;
+        // **Replace** this with your desired spawn‐position logic:
+        // Option A: fixed at origin
+        // Vector3 spawnPos = Vector3.zero;
+
+        // Option B: random within a circle on XZ plane
+        Vector2 circle = Random.insideUnitCircle * 5f;
+        Vector3 spawnPos = new Vector3(circle.x, 0f, circle.y);
+
         Instantiate(prefab, spawnPos, Quaternion.identity);
     }
 
