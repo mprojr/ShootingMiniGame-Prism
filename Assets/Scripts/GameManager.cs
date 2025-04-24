@@ -149,7 +149,7 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.G))
         {
             Debug.Log("G is being Pressed");
-            GameManager.Instance.ShowGameOverPanel();
+            GameManager.Instance.ShowPerkSelectPanel();
         }
 
         if (Input.GetKeyDown(KeyCode.C))
