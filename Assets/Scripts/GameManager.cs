@@ -39,11 +39,11 @@ public class GameManager : MonoBehaviour
 
     // Menus
     public GameObject menuPrefab;
-    private GameObject menuInstance;
-
+    
     public GameObject gameOverPanel;
     public GameObject perkSelectPanel;
     public GameObject roomCompletePanel;
+    public GameObject menuCanvas;
 
     void Start()
     {
@@ -72,17 +72,6 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             Debug.Log("Duplicate GameManager destroyed.");
         }
-
-        if (menuPrefab != null && menuInstance == null)
-        {
-            menuInstance = Instantiate(menuPrefab);
-            DontDestroyOnLoad(menuInstance); // Keeps menu alive across scenes
-
-            gameOverPanel = menuInstance.transform.Find("Canvas/Game Over")?.gameObject;
-            perkSelectPanel = menuInstance.transform.Find("Canvas/Select Perk")?.gameObject;
-            roomCompletePanel = menuInstance.transform.Find("Canvas/Next Room")?.gameObject;
-        }
-
 
 
     }
@@ -173,7 +162,10 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 1f;
 
             SceneManager.LoadScene(nextSceneIndex);
+
             Debug.Log($"Loading next scene: index {nextSceneIndex}");
+
+            
         }
         else
         {
@@ -205,26 +197,18 @@ public class GameManager : MonoBehaviour
     // Call this function when you want to load something in the upcoming scene
     // Call using
     // SceneManager.sceneLoaded += OnSceneLoaded;
-    /*
+    
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Find the player camera (adjust the name/tag if needed)
-        GameObject cameraObj = GameObject.FindWithTag("MainCamera");
+        Canvas canvas = menuCanvas.GetComponent<Canvas>();
+        GameObject playerCameraRig = GameObject.Find("PlayerCamera");
+        Transform centerEye = playerCameraRig.transform.Find("TrackingSpace/CenterEyeAnchor");
+        Camera centerEyeCamera = centerEye.GetComponent<Camera>();
+        canvas.worldCamera = centerEyeCamera;
 
-        if (cameraObj != null)
-        {
-            cameraObj.transform.position = new Vector3(0f, 1.4f, 0f);
-            Debug.Log("Player camera position reset to (0, 1.4, 0)");
-        }
-        else
-        {
-            Debug.LogWarning("MainCamera not found in the new scene.");
-        }
-
-        // Unsubscribe from event to prevent duplicate calls
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
-    */
+    
 
     // The Passive Perks Funcitons 
 

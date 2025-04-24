@@ -3724,6 +3724,7 @@ MonoBehaviour:
   gameOverPanel: {fileID: 696116881}
   perkSelectPanel: {fileID: 613833095}
   roomCompletePanel: {fileID: 1592794802}
+  menuCanvas: {fileID: 0}
 --- !u!4 &1002169220
 Transform:
   m_ObjectHideFlags: 0
@@ -8374,6 +8375,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1002169219}
+    - target: {fileID: 284399582134290063, guid: bacf022c93535204cb4768c878447b16, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 290963235954471339, guid: bacf022c93535204cb4768c878447b16, type: 3}
       propertyPath: m_Camera
       value: 
@@ -8421,6 +8426,10 @@ PrefabInstance:
     - target: {fileID: 906800031263901903, guid: bacf022c93535204cb4768c878447b16, type: 3}
       propertyPath: m_Name
       value: Menu Prefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 906800031263901903, guid: bacf022c93535204cb4768c878447b16, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4507810936474818731, guid: bacf022c93535204cb4768c878447b16, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
