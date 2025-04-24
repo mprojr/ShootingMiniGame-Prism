@@ -44,7 +44,7 @@ public class WristMenuController : MonoBehaviour
         if (GameManager.Instance != null)
         {
             Debug.Log("Found the ");
-            healthText.text = $"Health: {GameManager.Instance.currentHealth}/{GameManager.Instance.maxHealth}";
+            healthText.text = $"HP: {GameManager.Instance.currentHealth}/{GameManager.Instance.maxHealth}";
             scoreText.text = $"Stage: {GameManager.Instance.currentStage}";
 
             if (abilityStatusText != null)

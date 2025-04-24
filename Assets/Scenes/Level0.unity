@@ -3837,8 +3837,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 091d711a51339db43855a6c38ffaa2b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3
-  currentHealth: 3
+  maxHealth: 10
+  currentHealth: 10
   leftGun: LeftHandSalt
   rightGun: RightHandSalt
   currentStage: 1

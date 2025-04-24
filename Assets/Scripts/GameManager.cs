@@ -274,6 +274,12 @@ public class GameManager : MonoBehaviour
             currentStage = nextSceneIndex;
             diffcultLevel = currentStage;
             AddMaxHealth();
+            AddMaxHealth();
+            AddMaxHealth();
+            AddMaxHealth();
+            AddMaxHealth();
+            AddMaxHealth();
+            AddMaxHealth();
             currentHealth = maxHealth;
             Time.timeScale = 1f;
             roundEnded = false;  // Reset the round state
@@ -353,7 +359,7 @@ public class GameManager : MonoBehaviour
 
     public void AddMaxHealth()
     {
-        maxHealth += 2;
+        maxHealth += 1;
         Debug.Log($"Maximum health increased by 2. Total: {maxHealth}");
     }
 
