@@ -4230,7 +4230,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b6992808f664a54c838372dd2ab63ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boundaryRadius: 5
 --- !u!114 &1149440107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5250,6 +5249,14 @@ PrefabInstance:
     - target: {fileID: 4507810936474818731, guid: bacf022c93535204cb4768c878447b16, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 924859104}
+    - target: {fileID: 4507810936474818731, guid: bacf022c93535204cb4768c878447b16, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RestartGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 4507810936474818731, guid: bacf022c93535204cb4768c878447b16, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManagerButtonHelper, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6801268405233925787, guid: bacf022c93535204cb4768c878447b16, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
@@ -5262,6 +5269,10 @@ PrefabInstance:
     - target: {fileID: 6801268405233925787, guid: bacf022c93535204cb4768c878447b16, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
       value: GameManagerButtonHelper, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7531851555989436651, guid: bacf022c93535204cb4768c878447b16, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9082530257556606420, guid: bacf022c93535204cb4768c878447b16, type: 3}
       propertyPath: m_LocalPosition.z

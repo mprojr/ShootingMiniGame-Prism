@@ -364,8 +364,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1002169219}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 1132954489}
+        m_TargetAssemblyTypeName: GameManagerButtonHelper, Assembly-CSharp
         m_MethodName: SetAbilityToDoubleFireRate
         m_Mode: 1
         m_Arguments:
@@ -1397,9 +1397,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1002169219}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: LoadScene
+      - m_Target: {fileID: 1132954489}
+        m_TargetAssemblyTypeName: GameManagerButtonHelper, Assembly-CSharp
+        m_MethodName: LoadNextScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4525,8 +4525,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1002169219}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 1132954489}
+        m_TargetAssemblyTypeName: GameManagerButtonHelper, Assembly-CSharp
         m_MethodName: SetLeftHandSalt
         m_Mode: 1
         m_Arguments:
@@ -4575,6 +4575,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1116908324}
   m_CullTransparentMesh: 1
+--- !u!1 &1132954488
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1132954490}
+  - component: {fileID: 1132954489}
+  m_Layer: 0
+  m_Name: GMHelper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1132954489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1132954488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e870a45c738e284aa45b8c7eb6cc2e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1132954490
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1132954488}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.0279768, y: 1.3138347, z: 0.8827586}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1152005993
 GameObject:
   m_ObjectHideFlags: 0
@@ -5258,8 +5302,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1002169219}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 1132954489}
+        m_TargetAssemblyTypeName: GameManagerButtonHelper, Assembly-CSharp
         m_MethodName: SetAbilityToInvincibility
         m_Mode: 1
         m_Arguments:
@@ -6151,8 +6195,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1002169219}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 1132954489}
+        m_TargetAssemblyTypeName: GameManagerButtonHelper, Assembly-CSharp
         m_MethodName: SetAbilityToSlowAllWallDots
         m_Mode: 1
         m_Arguments:
@@ -6446,8 +6490,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1002169219}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 1132954489}
+        m_TargetAssemblyTypeName: GameManagerButtonHelper, Assembly-CSharp
         m_MethodName: SetTwoHandSalt
         m_Mode: 1
         m_Arguments:
@@ -6613,8 +6657,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1002169219}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 1132954489}
+        m_TargetAssemblyTypeName: GameManagerButtonHelper, Assembly-CSharp
         m_MethodName: SetTwoHandSpray
         m_Mode: 1
         m_Arguments:
@@ -7226,8 +7270,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1002169219}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 1132954489}
+        m_TargetAssemblyTypeName: GameManagerButtonHelper, Assembly-CSharp
         m_MethodName: SetRightHandSalt
         m_Mode: 1
         m_Arguments:
@@ -7415,8 +7459,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1002169219}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 1132954489}
+        m_TargetAssemblyTypeName: GameManagerButtonHelper, Assembly-CSharp
         m_MethodName: SetLeftHandSpray
         m_Mode: 1
         m_Arguments:
@@ -8011,8 +8055,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1002169219}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 1132954489}
+        m_TargetAssemblyTypeName: GameManagerButtonHelper, Assembly-CSharp
         m_MethodName: SetRightHandSpray
         m_Mode: 1
         m_Arguments:
@@ -8561,6 +8605,7 @@ SceneRoots:
   - {fileID: 1052170216}
   - {fileID: 5578597581158298683}
   - {fileID: 1152005996}
+  - {fileID: 1132954490}
   - {fileID: 1456984620}
   - {fileID: 731171268}
   - {fileID: 2488985722412535988}
