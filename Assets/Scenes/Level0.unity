@@ -5010,10 +5010,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1206234172}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b6992808f664a54c838372dd2ab63ed, type: 3}
+  m_Script: {fileID: 11500000, guid: 81cf799a87a813c4e827f761aba9c3a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boundaryRadius: 5
+  centerPoint: {fileID: 1655211570}
+  allowedRadius: 2.5
+  playerHead: {fileID: 1206234179}
+  damageInterval: 1
 --- !u!114 &1206234175
 MonoBehaviour:
   m_ObjectHideFlags: 0
