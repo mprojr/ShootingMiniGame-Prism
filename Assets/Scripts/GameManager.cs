@@ -278,8 +278,6 @@ public class GameManager : MonoBehaviour
             AddMaxHealth();
             AddMaxHealth();
             AddMaxHealth();
-            AddMaxHealth();
-            AddMaxHealth();
             currentHealth = maxHealth;
             Time.timeScale = 1f;
             roundEnded = false;  // Reset the round state

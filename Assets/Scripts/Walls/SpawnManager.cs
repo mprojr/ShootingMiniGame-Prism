@@ -5,7 +5,7 @@ public class SpawnManager : MonoBehaviour
 {
     private ISpawnZone[] spawnZones;
 
-    private int baseDotCount = 20;
+    private int baseDotCount = 30;
     public float baseSpawnDuration = 90f;
 
     void Start()
@@ -16,7 +16,7 @@ public class SpawnManager : MonoBehaviour
         int difficulty = GameManager.Instance.diffcultLevel;
         Debug.Log($"[SpawnManager] Current difficulty from GameManager: {difficulty}");
 
-        int totalDots = baseDotCount * difficulty + 30;
+        int totalDots = baseDotCount * difficulty + 40;
         Debug.Log($"[SpawnManager] Total dots to distribute: {totalDots}");
 
         float spawnDuration = baseSpawnDuration;
