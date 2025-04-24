@@ -6400,11 +6400,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eb40d64cf8e4204e9b9b4e1ce15ef03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallDotPrefab: {fileID: 0}
-  tankPrefab: {fileID: 0}
-  fastPrefab: {fileID: 0}
-  healthPrefab: {fileID: 0}
-  bossPrefab: {fileID: 0}
+  tankPrefab: {fileID: 7719429542248644880, guid: 81587e090e3eedc4f8f7eb6369a7974f, type: 3}
+  fastPrefab: {fileID: 4940683028002543695, guid: 104cfd71e69c72f46b483910c3d09232, type: 3}
+  healthPrefab: {fileID: 4348529714822390090, guid: 4649b7f1805d0134c8c3a2f9d50f4f23, type: 3}
+  bossPrefab: {fileID: 8763217503612766550, guid: c8cc9bc31b886dd4ca190c4fdd2149b1, type: 3}
   tankChance: 0.15
   fastChance: 0.12
   healthChance: 0.08
