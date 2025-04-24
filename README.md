@@ -9,7 +9,7 @@
 - Martin Rodriguez ([GitHub](https://github.com/mprojr))
 
 ## Project Description
-ShootingMiniGame is a fast-paced, action-packed mini-game where you play as a stationary exterminator. Your mission is to eliminate waves of bugs and pests using your available weapons and special abilities. The game features multiple bug types (including bosses) and a VR-compatible interface for an immersive experience. Enjoy smooth shooting mechanics, responsive controls, and a user-friendly interface as you defend your position against increasingly challenging enemies.
+ShootingMiniGame is a fast-paced, action-packed mini-game where you play as a stationary exterminator. Your mission is to eliminate waves of bugs and pests using your available weapons. The game feature a VR-compatible interface for an immersive experience. Enjoy smooth shooting mechanics, responsive controls, and a user-friendly interface as you defend your position againstchallenging enemies.
 
 ## Instructions
 1. **Setup:**
