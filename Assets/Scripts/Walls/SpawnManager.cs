@@ -1,49 +1,69 @@
-using System.Linq;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    private ISpawnZone[] spawnZones;
+    [Header("Prefabs")]
+    public GameObject wallDotPrefab;
+    public GameObject tankPrefab;
+    public GameObject fastPrefab;
+    public GameObject healthPrefab;
+    public GameObject bossPrefab;
 
-    public int baseDotCount = 30;
-    public float baseSpawnDuration = 90f;
+    [Header("Spawn Odds (sum ≤ 1.0)")]
+    [Range(0f, 1f)] public float tankChance   = 0.15f;
+    [Range(0f, 1f)] public float fastChance   = 0.12f;
+    [Range(0f, 1f)] public float healthChance = 0.08f;
+    public int bossWave = 6;
 
-    void Start()
-    {
-        spawnZones = FindObjectsOfType<MonoBehaviour>().OfType<ISpawnZone>().ToArray();
-        Debug.Log($"[SpawnManager] Found {spawnZones.Length} spawn zones.");
+    [Header("Timing")]
+    public float spawnInterval = 0.8f;
 
-        int difficulty = GameManager.Instance.diffcultLevel;
-        Debug.Log($"[SpawnManager] Current difficulty from GameManager: {difficulty}");
-
-        int totalDots = baseDotCount * difficulty + 30;
-        Debug.Log($"[SpawnManager] Total dots to distribute: {totalDots}");
-
-        float spawnDuration = baseSpawnDuration;
-
-        DistributeDots(totalDots, spawnDuration);
-    }
+    private float timer = 0f;
+    private int currentWave = 1;
 
     void Update()
     {
-        
+        timer += Time.deltaTime;
+        if (timer < spawnInterval) return;
+        timer = 0f;
+        TrySpawn();
     }
 
-    void DistributeDots(int totalDots, float spawnDuration)
+    private void TrySpawn()
     {
-        if (spawnZones.Length == 0)
+        // Boss appears on its designated wave
+        if (currentWave == bossWave)
         {
-            Debug.LogWarning("No spawn zones found!");
+            Spawn(bossPrefab);
+            currentWave++;
             return;
         }
 
-        int dotsPerZone = totalDots / spawnZones.Length;
-        int extraDots = totalDots % spawnZones.Length;
+        // Otherwise pick based on odds
+        float r = Random.value;
+        if (r < tankChance)
+            Spawn(tankPrefab);
+        else if (r < tankChance + fastChance)
+            Spawn(fastPrefab);
+        else if (r < tankChance + fastChance + healthChance)
+            Spawn(healthPrefab);
+        else
+            Spawn(wallDotPrefab);
+    }
 
-        for (int i = 0; i < spawnZones.Length; i++)
-        {
-            int finalDots = dotsPerZone + (i < extraDots ? 1 : 0);
-            spawnZones[i].Configure(finalDots, spawnDuration);
-        }
+    private void Spawn(GameObject prefab)
+    {
+        // Example spawn logic: random point within 5 units on XZ-plane
+        Vector2 circle = Random.insideUnitCircle * 5f;
+        Vector3 spawnPos = new Vector3(circle.x, 0f, circle.y);
+        Instantiate(prefab, spawnPos, Quaternion.identity);
+    }
+
+    /// <summary>
+    /// Call this from your wave manager to advance waves manually.
+    /// </summary>
+    public void NextWave()
+    {
+        currentWave++;
     }
 }

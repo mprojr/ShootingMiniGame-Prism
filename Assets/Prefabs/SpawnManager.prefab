@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2149108367930539498
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8263451921366020487}
+  - component: {fileID: 2560482825043050214}
+  - component: {fileID: 2878499570789136171}
+  m_Layer: 0
+  m_Name: SpawnManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8263451921366020487
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2149108367930539498}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2560482825043050214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2149108367930539498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8eb40d64cf8e4204e9b9b4e1ce15ef03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wallDotPrefab: {fileID: 3631464262956062660, guid: d0fb6a097f4190d489415d2852183696, type: 3}
+  tankPrefab: {fileID: 3631464262956062660, guid: dbe78b766537f9f4a80edfdaf6fb151e, type: 3}
+  fastPrefab: {fileID: 3631464262956062660, guid: 93c911b1e5632124498296179c916b0b, type: 3}
+  healthPrefab: {fileID: 3631464262956062660, guid: 966da4a089f5b7242bdaaa2eac54ffea, type: 3}
+  bossPrefab: {fileID: 3631464262956062660, guid: 55009256458332f42aec6c653a833fec, type: 3}
+  tankChance: 0.15
+  fastChance: 0.12
+  healthChance: 0.08
+  bossWave: 6
+  spawnInterval: 0.8
+--- !u!114 &2878499570789136171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2149108367930539498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8eb40d64cf8e4204e9b9b4e1ce15ef03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wallDotPrefab: {fileID: 3631464262956062660, guid: d0fb6a097f4190d489415d2852183696, type: 3}
+  tankPrefab: {fileID: 7719429542248644880, guid: 81587e090e3eedc4f8f7eb6369a7974f, type: 3}
+  fastPrefab: {fileID: 4940683028002543695, guid: 104cfd71e69c72f46b483910c3d09232, type: 3}
+  healthPrefab: {fileID: 4348529714822390090, guid: 4649b7f1805d0134c8c3a2f9d50f4f23, type: 3}
+  bossPrefab: {fileID: 8763217503612766550, guid: c8cc9bc31b886dd4ca190c4fdd2149b1, type: 3}
+  tankChance: 0.15
+  fastChance: 0.12
+  healthChance: 0.08
+  bossWave: 6
+  spawnInterval: 0.8
