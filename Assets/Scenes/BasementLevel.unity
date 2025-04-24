@@ -1822,12 +1822,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 464523647}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b6992808f664a54c838372dd2ab63ed, type: 3}
+  m_Script: {fileID: 11500000, guid: 81cf799a87a813c4e827f761aba9c3a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boundaryRadius: 5
+  centerPoint: {fileID: 1207722917}
+  allowedRadius: 2.5
+  playerHead: {fileID: 464523648}
+  damageInterval: 2
 --- !u!114 &464523651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3084,7 +3087,6 @@ RectTransform:
   m_LocalScale: {x: 1.59, y: 1.59, z: 1.59}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 466610056}
   - {fileID: 1680406051}
   - {fileID: 1676337391}
   - {fileID: 2045828380}
@@ -5655,7 +5657,6 @@ RectTransform:
   m_LocalScale: {x: 0.005, y: 0.005, z: 0.005}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1013531345}
   - {fileID: 798394756}
   m_Father: {fileID: 1601272559}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5678,7 +5679,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pausePanel: {fileID: 798394755}
   pauseText: {fileID: 0}
-  resumeButton: {fileID: 466610053}
+  resumeButton: {fileID: 0}
   settingsButton: {fileID: 1680406048}
   quitButton: {fileID: 1676337392}
   backgroundBlur: {fileID: 0}
@@ -5709,7 +5710,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   pauseButton: 256
   interactionButton: 16384
-  vrMenuInteractor: {fileID: 1013531343}
+  vrMenuInteractor: {fileID: 0}
   playerObject: {fileID: 464523647}
   laserPointer: {fileID: 300304204}
   settingsPanel: {fileID: 0}
@@ -6341,6 +6342,7 @@ Transform:
   - {fileID: 2034749655}
   - {fileID: 1220661447}
   - {fileID: 928818560}
+  - {fileID: 1503644037}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1613022732
@@ -8647,6 +8649,10 @@ MonoBehaviour:
   wallDotSpeedFactor: 1
   selectedAbility: 4
   isInvincible: 0
+  menuPrefab: {fileID: 0}
+  gameOverPanel: {fileID: 0}
+  perkSelectPanel: {fileID: 0}
+  roomCompletePanel: {fileID: 0}
 --- !u!1 &2035120338
 GameObject:
   m_ObjectHideFlags: 0
@@ -9458,6 +9464,7 @@ Transform:
   m_Children:
   - {fileID: 97013766}
   - {fileID: 867563613}
+  - {fileID: 300304205}
   m_Father: {fileID: 1099996865}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2119624461

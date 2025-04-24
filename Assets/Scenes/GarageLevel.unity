@@ -1845,6 +1845,10 @@ MonoBehaviour:
   wallDotSpeedFactor: 1
   selectedAbility: 4
   isInvincible: 0
+  menuPrefab: {fileID: 0}
+  gameOverPanel: {fileID: 0}
+  perkSelectPanel: {fileID: 0}
+  roomCompletePanel: {fileID: 0}
 --- !u!1 &384586957
 GameObject:
   m_ObjectHideFlags: 0
@@ -4178,10 +4182,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1149440103}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b6992808f664a54c838372dd2ab63ed, type: 3}
+  m_Script: {fileID: 11500000, guid: 81cf799a87a813c4e827f761aba9c3a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boundaryRadius: 5
+  centerPoint: {fileID: 1844910021}
+  allowedRadius: 2.5
+  playerHead: {fileID: 1149440104}
+  damageInterval: 2
 --- !u!114 &1149440107
 MonoBehaviour:
   m_ObjectHideFlags: 0
