@@ -4317,6 +4317,7 @@ GameObject:
   - component: {fileID: 1149440105}
   - component: {fileID: 1149440111}
   - component: {fileID: 1149440112}
+  - component: {fileID: 1149440113}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -4495,8 +4496,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da0f8cc571aafd945bfbf236c60b5550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityCooldown: 5
   currentAbility: 0
+--- !u!114 &1149440113
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149440103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81cf799a87a813c4e827f761aba9c3a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  centerPoint: {fileID: 1844910021}
+  allowedRadius: 2.5
+  playerHead: {fileID: 1149440104}
+  damageInterval: 2
 --- !u!1001 &1242894520
 PrefabInstance:
   m_ObjectHideFlags: 0

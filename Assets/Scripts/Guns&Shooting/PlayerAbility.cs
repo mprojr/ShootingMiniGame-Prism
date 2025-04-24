@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class PlayerAbility : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-
-    public float abilityCooldown = 15f;
+    private float abilityCooldown = 15f;
     private float nextAbilityTime = 0f;
+    private bool isOnCooldown = false;
+    private float cooldownStartTime;
+    private float currentEffectDuration;
+
     public AbilityType currentAbility = AbilityType.None;
-    
 
     public enum AbilityType
     {
@@ -17,7 +18,6 @@ public class PlayerAbility : MonoBehaviour
         DoubleFireRate,
         SlowAllWallDots
     }
-    
 
     void Start()
     {
@@ -25,72 +25,82 @@ public class PlayerAbility : MonoBehaviour
         Debug.Log($"Current Selected Ability: {currentAbility}");
     }
 
-    // Update is called once per frame
     void Update()
     {
-        GameManager.Instance.isAbilityReady = (Time.time >= nextAbilityTime);
-
-        currentAbility = GameManager.Instance.selectedAbility;
-        if ((Input.GetKeyDown(KeyCode.E) || OVRInput.GetDown(OVRInput.Button.One)) && Time.time >= nextAbilityTime)
+        if (isOnCooldown)
         {
-            UseAbility();
-            nextAbilityTime = Time.time + abilityCooldown;
+            if (Time.time >= cooldownStartTime + abilityCooldown)
+            {
+                isOnCooldown = false;
+            }
         }
 
+        GameManager.Instance.isAbilityReady = !isOnCooldown;
 
+        currentAbility = GameManager.Instance.selectedAbility;
+
+        if ((Input.GetKeyDown(KeyCode.E) || OVRInput.GetDown(OVRInput.Button.One)) && !isOnCooldown)
+        {
+            UseAbility();
+            // cooldownStartTime will be set AFTER the effect ends (in coroutine)
+        }
     }
-
-
 
     void UseAbility()
     {
         Debug.Log("Ability used!");
 
         ScreenTintController tint = FindObjectOfType<ScreenTintController>();
-
         if (tint == null)
-        {
             Debug.Log("Tint is not being found");
-        }
         else
-        {
             Debug.Log("Tint is found");
-        }
 
         switch (currentAbility)
         {
             case AbilityType.Invincibility:
-                ActivatInvincible(5f);
-                tint?.ShowTint(Color.yellow, 10f);
+                currentEffectDuration = 5f;
+                ActivatInvincible(currentEffectDuration);
+                tint?.ShowTint(Color.yellow, currentEffectDuration);
                 break;
 
             case AbilityType.DoubleBulletSize:
-                DoubleBulletSize(2f, 7.5f);
-                tint?.ShowTint(Color.cyan, 5f);
+                currentEffectDuration = 7.5f;
+                DoubleBulletSize(2f, currentEffectDuration);
+                tint?.ShowTint(Color.cyan, currentEffectDuration);
                 break;
 
             case AbilityType.DoubleFireRate:
-                DoubleFireRate(0.5f, 5f);
-                tint?.ShowTint(Color.red, 5f);
+                currentEffectDuration = 5f;
+                DoubleFireRate(0.5f, currentEffectDuration);
+                tint?.ShowTint(Color.red, currentEffectDuration);
                 break;
 
             case AbilityType.SlowAllWallDots:
-                SlowAllWallDots(0.2f, 3f);
-                tint?.ShowTint(Color.blue, 3f);
+                currentEffectDuration = 3f;
+                SlowAllWallDots(0.2f, currentEffectDuration);
+                tint?.ShowTint(Color.blue, currentEffectDuration);
                 break;
 
             default:
                 Debug.LogWarning("No ability assigned!");
-                break;
+                return;
         }
+
+        // Start cooldown AFTER the effect duration
+        StartCoroutine(StartCooldownAfterEffect(currentEffectDuration));
     }
 
+    System.Collections.IEnumerator StartCooldownAfterEffect(float effectDuration)
+    {
+        yield return new WaitForSeconds(effectDuration);
+        cooldownStartTime = Time.time;
+        isOnCooldown = true;
+    }
 
     public void SlowAllWallDots(float multiplier, float duration)
     {
-        WallDotMovement[] allDots = GameObject.FindObjectsOfType<WallDotMovement>();
-
-        foreach (WallDotMovement dot in allDots)
+        foreach (WallDotMovement dot in GameObject.FindObjectsOfType<WallDotMovement>())
         {
             dot.ApplySpeedMultiplier(multiplier, duration);
         }
@@ -99,22 +109,13 @@ public class PlayerAbility : MonoBehaviour
     public void DoubleFireRate(float multiplier, float duration)
     {
         LeftOneHandGun leftGun = GameObject.FindObjectOfType<LeftOneHandGun>();
-        if (leftGun != null)
-        {
-            leftGun.FireRateAbility(multiplier, duration);
-        }
+        if (leftGun != null) leftGun.FireRateAbility(multiplier, duration);
 
         RightOneHandGun rightGun = GameObject.FindObjectOfType<RightOneHandGun>();
-        if (rightGun != null)
-        {
-            rightGun.FireRateAbility(multiplier, duration);
-        }
+        if (rightGun != null) rightGun.FireRateAbility(multiplier, duration);
 
         LeftTwoHandGun twoLeftGun = GameObject.FindObjectOfType<LeftTwoHandGun>();
-        if (twoLeftGun != null)
-        {
-            twoLeftGun.FireRateAbility(multiplier, duration);
-        }
+        if (twoLeftGun != null) twoLeftGun.FireRateAbility(multiplier, duration);
     }
 
     public void DoubleBulletSize(float multiplier, float duration)
@@ -126,7 +127,4 @@ public class PlayerAbility : MonoBehaviour
     {
         GameManager.Instance.ActivateInvincibility(duration);
     }
-
-
-
 }
