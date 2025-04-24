@@ -289,22 +289,24 @@ public class GameManager : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-
         if (isInvincible)
         {
             Debug.Log("No Damage Taken because of Invincible");
             return;
         }
 
-
         currentHealth -= damage;
-
         currentHealth = Mathf.Max(currentHealth, 0);
         Debug.Log($"Player took {damage} damage. Current Health: {currentHealth}");
 
         if (currentHealth <= 0)
         {
-            // Open the End Game Menu 
+            if (gameOverPanel != null)
+            {
+                gameOverPanel.SetActive(true);
+                Time.timeScale = 0f; // Freeze the game
+                Debug.Log("Game Over Panel activated - Player ran out of health");
+            }
         }
     }
 
@@ -503,7 +505,8 @@ public class GameManager : MonoBehaviour
         currentStage = 0;
         diffcultLevel = 0;
         currentHealth = maxHealth;
-
+        Time.timeScale = 1f; // Unfreeze the game
+        
         SceneManager.LoadScene(0);
         Debug.Log("Game restarted. Loaded scene 0.");
     }

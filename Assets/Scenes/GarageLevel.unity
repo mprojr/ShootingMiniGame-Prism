@@ -5308,7 +5308,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4167636866010016977, guid: bacf022c93535204cb4768c878447b16, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1954259330}
   m_SourcePrefab: {fileID: 100100000, guid: bacf022c93535204cb4768c878447b16, type: 3}
 --- !u!4 &1612491524 stripped
 Transform:
@@ -6611,6 +6614,29 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7ac1c8b5baad0943aa4415c859b8d5e, type: 3}
+--- !u!1 &1954259328 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4167636866010016977, guid: bacf022c93535204cb4768c878447b16, type: 3}
+  m_PrefabInstance: {fileID: 1612491523}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1954259330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1954259328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be632dc4a94218a4688c7b344a78bd7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  headset: {fileID: 0}
+  distanceFromUser: 1.5
+  offsetFromCenter: {x: 0, y: 0, z: 0}
+  followUser: 1
+  followSpeed: 2
+  maxRotationAngle: 30
 --- !u!1001 &1970958972
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -661,7 +661,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4167636866010016977, guid: bacf022c93535204cb4768c878447b16, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1676157151}
   m_SourcePrefab: {fileID: 100100000, guid: bacf022c93535204cb4768c878447b16, type: 3}
 --- !u!4 &153275407 stripped
 Transform:
@@ -6768,6 +6771,29 @@ Transform:
   - {fileID: 1809485755}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1676157150 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4167636866010016977, guid: bacf022c93535204cb4768c878447b16, type: 3}
+  m_PrefabInstance: {fileID: 153275406}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1676157151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1676157150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be632dc4a94218a4688c7b344a78bd7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  headset: {fileID: 746843288}
+  distanceFromUser: 1.5
+  offsetFromCenter: {x: 0, y: 0, z: 0}
+  followUser: 1
+  followSpeed: 2
+  maxRotationAngle: 360
 --- !u!1 &1678186931
 GameObject:
   m_ObjectHideFlags: 0

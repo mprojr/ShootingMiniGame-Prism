@@ -1477,6 +1477,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 522926820628845222, guid: 2f3f7d4927009b84583c02fcbc509217, type: 3}
   m_PrefabInstance: {fileID: 354465383}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &373024204 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4167636866010016977, guid: bacf022c93535204cb4768c878447b16, type: 3}
+  m_PrefabInstance: {fileID: 975238972}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &373024205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 373024204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be632dc4a94218a4688c7b344a78bd7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  headset: {fileID: 2071031510}
+  distanceFromUser: 1.5
+  offsetFromCenter: {x: 0, y: 0, z: 0}
+  followUser: 1
+  followSpeed: 2
+  maxRotationAngle: 360
 --- !u!1 &399174018
 GameObject:
   m_ObjectHideFlags: 0
@@ -3717,7 +3740,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4167636866010016977, guid: bacf022c93535204cb4768c878447b16, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 373024205}
   m_SourcePrefab: {fileID: 100100000, guid: bacf022c93535204cb4768c878447b16, type: 3}
 --- !u!4 &975238973 stripped
 Transform:
