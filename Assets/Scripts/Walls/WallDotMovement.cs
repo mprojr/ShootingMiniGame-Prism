@@ -20,6 +20,15 @@ public class WallDotMovement : MonoBehaviour
         }
         speed = speed * GameManager.Instance.wallDotSpeedFactor;
         Debug.Log($"New WallDot with Speed: {speed}");
+        
+        // Make the main WallDot invisible by setting alpha to 0
+        if (dotRenderer != null)
+        {
+            Color invisibleColor = dotRenderer.material.color;
+            invisibleColor.a = 0; // Set alpha to zero (fully transparent)
+            dotRenderer.material.color = invisibleColor;
+        }
+        
         StartCoroutine(GrowStage());
     }
 
@@ -27,7 +36,18 @@ public class WallDotMovement : MonoBehaviour
     {
         if (isMoving && !shrinking)
         {
+            // Move towards player
             transform.position = Vector3.MoveTowards(transform.position, playerCamera.transform.position, speed * Time.deltaTime);
+            
+            // Make the spider face the player
+            Vector3 directionToPlayer = playerCamera.transform.position - transform.position;
+            directionToPlayer.y = 0; // Keep the spider upright (optional - remove if you want full 3D rotation)
+            
+            if (directionToPlayer != Vector3.zero)
+            {
+                Quaternion lookRotation = Quaternion.LookRotation(directionToPlayer);
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 10 * Time.deltaTime);
+            }
         }       
     }
 
@@ -48,7 +68,13 @@ public class WallDotMovement : MonoBehaviour
         }
 
         transform.localScale = tragetScale;
-        dotRenderer.material.color = Color.yellow;
+        // Keep the WallDot invisible even when changing states
+        if (dotRenderer != null)
+        {
+            Color invisibleColor = Color.yellow;
+            invisibleColor.a = 0; // Keep alpha at zero
+            dotRenderer.material.color = invisibleColor;
+        }
         isMoving = true;
     }
 
@@ -77,7 +103,13 @@ public class WallDotMovement : MonoBehaviour
         {
             float progress = elapsedTime / shrinkTime;
             transform.localScale = Vector3.Lerp(originalScale, Vector3.zero, progress);
-            dotRenderer.material.color = new Color(shrinkColor.r, shrinkColor.g, shrinkColor.b, 1 - progress); // Fade out
+            
+            // Set color with alpha 0 to keep the main dot invisible during shrinking
+            if (dotRenderer != null)
+            {
+                dotRenderer.material.color = new Color(shrinkColor.r, shrinkColor.g, shrinkColor.b, 0); // Keep invisible
+            }
+            
             elapsedTime += Time.deltaTime;
             yield return null;
         }
