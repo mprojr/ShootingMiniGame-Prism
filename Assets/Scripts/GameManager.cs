@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
     public GameObject menuCanvas;
 
     // Add these variables to the class
-    private float roundTime = 90f;
+    private float roundTime = 95f;
     private bool roundEnded = false;
 
     void Start()
@@ -60,14 +60,28 @@ public class GameManager : MonoBehaviour
         // Find and assign all menu panels
         FindMenuObjects();
         
-        // Make sure all menu panels are inactive at start
+        // Make sure all panels are inactive at start
         if (perkSelectPanel != null) perkSelectPanel.SetActive(false);
         if (gameOverPanel != null) gameOverPanel.SetActive(false);
-        if (roomCompletePanel != null) roomCompletePanel.SetActive(false);
+        if (roomCompletePanel != null) 
+        {
+            roomCompletePanel.SetActive(false);
+            Debug.Log($"Room Complete Panel deactivated in Start() - Scene Index: {currentStage}");
+        }
         
         // Reset the round timer
-        roundTime = 90f;
+        roundTime = 95f;
         roundEnded = false;
+
+        // Force menu canvas to be inactive at start if it exists
+        if (menuCanvas != null)
+        {
+            foreach (Transform child in menuCanvas.transform)
+            {
+                child.gameObject.SetActive(false);
+            }
+            Debug.Log($"Forcefully deactivated all menu panels in scene {currentStage}");
+        }
     }
 
     private void FindMenuObjects()
@@ -110,13 +124,18 @@ public class GameManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         // Reset round timer when new scene loads
-        roundTime = 90f;
+        roundTime = 95f;
         roundEnded = false;
 
-        // Make sure all panels are inactive at scene start
-        if (perkSelectPanel != null) perkSelectPanel.SetActive(false);
-        if (gameOverPanel != null) gameOverPanel.SetActive(false);
-        if (roomCompletePanel != null) roomCompletePanel.SetActive(false);
+        // Force deactivate all panels immediately on scene load
+        if (menuCanvas != null)
+        {
+            foreach (Transform child in menuCanvas.transform)
+            {
+                child.gameObject.SetActive(false);
+            }
+            Debug.Log($"Forcefully deactivated all menu panels in OnSceneLoaded - Scene: {scene.buildIndex}");
+        }
 
         // Setup the canvas camera reference
         if (menuCanvas != null)
@@ -247,17 +266,20 @@ public class GameManager : MonoBehaviour
         int nextSceneIndex = currentStage + 1;
         if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
         {
+            // Deactivate all panels before loading new scene
+            if (perkSelectPanel != null) perkSelectPanel.SetActive(false);
+            if (roomCompletePanel != null) roomCompletePanel.SetActive(false);
+            
             currentStage = nextSceneIndex;
             diffcultLevel = currentStage;
             AddMaxHealth();
             currentHealth = maxHealth;
             Time.timeScale = 1f;
+            roundEnded = false;  // Reset the round state
+            roundTime = 95f;     // Reset the timer
 
             SceneManager.LoadScene(nextSceneIndex);
-
             Debug.Log($"Loading next scene: index {nextSceneIndex}");
-
-            
         }
         else
         {
@@ -490,14 +512,29 @@ public class GameManager : MonoBehaviour
     private void EndRound()
     {
         roundEnded = true;
-        if (perkSelectPanel != null)
+        
+        // Check if this is the last scene
+        bool isLastScene = currentStage == SceneManager.sceneCountInBuildSettings - 1;
+        
+        if (isLastScene)
         {
-            perkSelectPanel.SetActive(true);
-            Debug.Log("Perk Select Panel activated after 90 seconds");
+            if (roomCompletePanel != null)
+            {
+                roomCompletePanel.SetActive(true);
+                Debug.Log("Room Complete Panel activated - Last scene completed!");
+            }
         }
         else
         {
-            Debug.LogWarning("Perk Select Panel is not assigned in the GameManager!");
+            if (perkSelectPanel != null)
+            {
+                perkSelectPanel.SetActive(true);
+                Debug.Log("Perk Select Panel activated after 95 seconds");
+            }
+            else
+            {
+                Debug.LogWarning("Perk Select Panel is not assigned in the GameManager!");
+            }
         }
     }
 }
