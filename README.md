@@ -1,4 +1,4 @@
-# Group Name: Prism
+# Prism : Bug Cleaner
 
 ## Group Members
 - Ayyan Qamer ([GitHub](https://github.com/ayyan67))
