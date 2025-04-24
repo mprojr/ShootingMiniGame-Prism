@@ -45,12 +45,95 @@ public class GameManager : MonoBehaviour
     public GameObject roomCompletePanel;
     public GameObject menuCanvas;
 
+    // Add these variables to the class
+    private float roundTime = 90f;
+    private bool roundEnded = false;
+
     void Start()
     {
         currentStage = SceneManager.GetActiveScene().buildIndex;
         diffcultLevel = currentStage;
+        
+        // Register to the scene loaded event
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        
+        // Find and assign all menu panels
+        FindMenuObjects();
+        
+        // Make sure all menu panels are inactive at start
+        if (perkSelectPanel != null) perkSelectPanel.SetActive(false);
+        if (gameOverPanel != null) gameOverPanel.SetActive(false);
+        if (roomCompletePanel != null) roomCompletePanel.SetActive(false);
+        
+        // Reset the round timer
+        roundTime = 90f;
+        roundEnded = false;
     }
 
+    private void FindMenuObjects()
+    {
+        // First instantiate the menu prefab if it's not already in the scene
+        if (menuPrefab != null && (menuCanvas == null || !menuCanvas.activeInHierarchy))
+        {
+            GameObject menuInstance = Instantiate(menuPrefab);
+            menuCanvas = menuInstance.transform.Find("Canvas").gameObject;
+            // Don't destroy the menu when loading new scenes
+            DontDestroyOnLoad(menuInstance);
+            Debug.Log("Menu prefab instantiated and set to DontDestroyOnLoad");
+        }
+
+        if (menuCanvas == null)
+        {
+            Debug.LogError("Canvas not found! Make sure the Menu Prefab is assigned and contains a Canvas object.");
+            return;
+        }
+
+        // Find panels as children of the canvas
+        Transform canvasTransform = menuCanvas.transform;
+        
+        perkSelectPanel = canvasTransform.Find("Select Perk")?.gameObject;
+        if (perkSelectPanel == null) Debug.LogError("Select Park panel not found under Canvas!");
+
+        gameOverPanel = canvasTransform.Find("Game Over")?.gameObject;
+        if (gameOverPanel == null) Debug.LogError("Game Over panel not found under Canvas!");
+
+        roomCompletePanel = canvasTransform.Find("Game Completed")?.gameObject;
+        if (roomCompletePanel == null) Debug.LogError("Game Completed panel not found under Canvas!");
+
+        // Log success if all panels are found
+        if (perkSelectPanel != null && gameOverPanel != null && roomCompletePanel != null)
+        {
+            Debug.Log("All menu panels found successfully!");
+        }
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Reset round timer when new scene loads
+        roundTime = 90f;
+        roundEnded = false;
+
+        // Make sure all panels are inactive at scene start
+        if (perkSelectPanel != null) perkSelectPanel.SetActive(false);
+        if (gameOverPanel != null) gameOverPanel.SetActive(false);
+        if (roomCompletePanel != null) roomCompletePanel.SetActive(false);
+
+        // Setup the canvas camera reference
+        if (menuCanvas != null)
+        {
+            Canvas canvas = menuCanvas.GetComponent<Canvas>();
+            GameObject playerCameraRig = GameObject.Find("PlayerCamera");
+            if (playerCameraRig != null)
+            {
+                Transform centerEye = playerCameraRig.transform.Find("TrackingSpace/CenterEyeAnchor");
+                if (centerEye != null)
+                {
+                    Camera centerEyeCamera = centerEye.GetComponent<Camera>();
+                    canvas.worldCamera = centerEyeCamera;
+                }
+            }
+        }
+    }
 
     void Awake()
     {
@@ -147,6 +230,15 @@ public class GameManager : MonoBehaviour
             GameManager.Instance.RestartGame();
         }
 
+        if (!roundEnded)
+        {
+            roundTime -= Time.deltaTime;
+            
+            if (roundTime <= 0)
+            {
+                EndRound();
+            }
+        }
 
     }
 
@@ -198,14 +290,9 @@ public class GameManager : MonoBehaviour
     // Call using
     // SceneManager.sceneLoaded += OnSceneLoaded;
     
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    void OnDestroy()
     {
-        Canvas canvas = menuCanvas.GetComponent<Canvas>();
-        GameObject playerCameraRig = GameObject.Find("PlayerCamera");
-        Transform centerEye = playerCameraRig.transform.Find("TrackingSpace/CenterEyeAnchor");
-        Camera centerEyeCamera = centerEye.GetComponent<Camera>();
-        canvas.worldCamera = centerEyeCamera;
-
+        // Clean up the scene loaded event subscription
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
     
@@ -397,5 +484,20 @@ public class GameManager : MonoBehaviour
 
         SceneManager.LoadScene(0);
         Debug.Log("Game restarted. Loaded scene 0.");
+    }
+
+    // Add this method to handle end of round
+    private void EndRound()
+    {
+        roundEnded = true;
+        if (perkSelectPanel != null)
+        {
+            perkSelectPanel.SetActive(true);
+            Debug.Log("Perk Select Panel activated after 90 seconds");
+        }
+        else
+        {
+            Debug.LogWarning("Perk Select Panel is not assigned in the GameManager!");
+        }
     }
 }

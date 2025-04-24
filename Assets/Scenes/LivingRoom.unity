@@ -528,7 +528,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 284399582134290063, guid: bacf022c93535204cb4768c878447b16, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 290963235954471339, guid: bacf022c93535204cb4768c878447b16, type: 3}
       propertyPath: m_Camera
@@ -577,6 +577,10 @@ PrefabInstance:
     - target: {fileID: 906800031263901903, guid: bacf022c93535204cb4768c878447b16, type: 3}
       propertyPath: m_Name
       value: Menu Prefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 906800031263901903, guid: bacf022c93535204cb4768c878447b16, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3544463005296925474, guid: bacf022c93535204cb4768c878447b16, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -662,6 +666,31 @@ PrefabInstance:
 --- !u!4 &153275407 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 435681044779669343, guid: bacf022c93535204cb4768c878447b16, type: 3}
+  m_PrefabInstance: {fileID: 153275406}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &153275408 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7531851555989436651, guid: bacf022c93535204cb4768c878447b16, type: 3}
+  m_PrefabInstance: {fileID: 153275406}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &153275409 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3139189351957148553, guid: bacf022c93535204cb4768c878447b16, type: 3}
+  m_PrefabInstance: {fileID: 153275406}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &153275410 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 284399582134290063, guid: bacf022c93535204cb4768c878447b16, type: 3}
+  m_PrefabInstance: {fileID: 153275406}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &153275411 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3822930644696333172, guid: bacf022c93535204cb4768c878447b16, type: 3}
+  m_PrefabInstance: {fileID: 153275406}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &153275412 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 906800031263901903, guid: bacf022c93535204cb4768c878447b16, type: 3}
   m_PrefabInstance: {fileID: 153275406}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &165077003
@@ -5147,11 +5176,11 @@ MonoBehaviour:
   wallDotSpeedFactor: 1
   selectedAbility: 4
   isInvincible: 0
-  menuPrefab: {fileID: 0}
-  gameOverPanel: {fileID: 0}
-  perkSelectPanel: {fileID: 0}
-  roomCompletePanel: {fileID: 0}
-  menuCanvas: {fileID: 0}
+  menuPrefab: {fileID: 153275412}
+  gameOverPanel: {fileID: 153275408}
+  perkSelectPanel: {fileID: 153275410}
+  roomCompletePanel: {fileID: 153275409}
+  menuCanvas: {fileID: 153275411}
 --- !u!1001 &1411077546
 PrefabInstance:
   m_ObjectHideFlags: 0
