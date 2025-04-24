@@ -4,7 +4,7 @@ public class PlayerAbility : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-    public float abilityCooldown = 5f;
+    public float abilityCooldown = 15f;
     private float nextAbilityTime = 0f;
     public AbilityType currentAbility = AbilityType.None;
     
@@ -28,6 +28,8 @@ public class PlayerAbility : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GameManager.Instance.isAbilityReady = (Time.time >= nextAbilityTime);
+
         currentAbility = GameManager.Instance.selectedAbility;
         if ((Input.GetKeyDown(KeyCode.E) || OVRInput.GetDown(OVRInput.Button.One)) && Time.time >= nextAbilityTime)
         {
@@ -58,12 +60,12 @@ public class PlayerAbility : MonoBehaviour
         switch (currentAbility)
         {
             case AbilityType.Invincibility:
-                ActivatInvincible(10f);
+                ActivatInvincible(5f);
                 tint?.ShowTint(Color.yellow, 10f);
                 break;
 
             case AbilityType.DoubleBulletSize:
-                DoubleBulletSize(2f, 5f);
+                DoubleBulletSize(2f, 7.5f);
                 tint?.ShowTint(Color.cyan, 5f);
                 break;
 

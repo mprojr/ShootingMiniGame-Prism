@@ -15,6 +15,7 @@ public class WristMenuController : MonoBehaviour
     [Header("UI Text Elements")]
     public TextMeshProUGUI healthText;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI abilityStatusText;
 
     private void Start()
     {
@@ -27,6 +28,9 @@ public class WristMenuController : MonoBehaviour
 
         if (scoreText == null)
             scoreText = transform.Find("scoretext").GetComponent<TextMeshProUGUI>();
+
+        if (abilityStatusText == null)
+            abilityStatusText = transform.Find("abilitytext").GetComponent<TextMeshProUGUI>();
     }
 
     private void Update()
@@ -41,7 +45,15 @@ public class WristMenuController : MonoBehaviour
         {
             healthText.text = $"Health: {GameManager.Instance.currentHealth}/{GameManager.Instance.maxHealth}";
             scoreText.text = $"Stage: {GameManager.Instance.currentStage}";
+
+            if (abilityStatusText != null)
+            {
+                Debug.Log("Found the abilityStatusText");
+                abilityStatusText.text = GameManager.Instance.isAbilityReady ? "Ability: Ready" : "Ability: Cooldown";
+            }
         }
+
+        
     }
 }
 

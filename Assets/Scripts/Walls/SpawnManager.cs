@@ -5,7 +5,7 @@ public class SpawnManager : MonoBehaviour
 {
     private ISpawnZone[] spawnZones;
 
-    public int baseDotCount = 30;
+    public int baseDotCount = 5;
     public float baseSpawnDuration = 90f;
 
     void Start()

@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     // Abilities 
     public AbilityType selectedAbility = AbilityType.SlowAllWallDots;
     public bool isInvincible = false;
+    public bool isAbilityReady = false;
 
     // Menus
     public GameObject menuPrefab;
