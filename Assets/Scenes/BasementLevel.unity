@@ -1910,7 +1910,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da0f8cc571aafd945bfbf236c60b5550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityCooldown: 5
   currentAbility: 0
 --- !u!1001 &523456889
 PrefabInstance:
@@ -9019,7 +9018,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SendPointerHoverToParent: 1
-  rayTransform: {fileID: 2071031510}
+  rayTransform: {fileID: 200432250}
   m_Cursor: {fileID: 0}
   joyPadClickButton: 1
   gazeClickKey: 32
