@@ -1,6 +1,6 @@
 using UnityEngine;
+using System;
 using System.Collections;
-using UnityEngine.UIElements;
 
 public class WallDotMovement : MonoBehaviour
 {
@@ -10,14 +10,19 @@ public class WallDotMovement : MonoBehaviour
     private bool shrinking = false;
     private Renderer dotRenderer;
 
+    // Exposed events for custom behaviors
+    public event Action OnSpawn;
+    public event Action OnHit;
+    public event Action OnDie;
+
     void Start()
     {
         dotRenderer = GetComponent<Renderer>();
         if (playerCamera == null)
         {
             playerCamera = GameObject.FindGameObjectWithTag("Player");
-            //Debug.Log("FOUND THE PLAYER FROM WALLDOTMOV");
         }
+        
         speed = speed * GameManager.Instance.wallDotSpeedFactor;
         Debug.Log($"New WallDot with Speed: {speed}");
         
@@ -56,18 +61,17 @@ public class WallDotMovement : MonoBehaviour
         float growTime = 3.0f;
         float elapsedTime = 0f;
         Vector3 initialScale = transform.localScale;
-        Vector3 tragetScale = initialScale * 2.0f;
-        // Debug.Log("From GrowStage");
+        Vector3 targetScale = initialScale * 2.0f;
 
         while (elapsedTime < growTime)
         {
-            transform.localScale = Vector3.Lerp(initialScale, tragetScale, elapsedTime / growTime);
+            transform.localScale = Vector3.Lerp(initialScale, targetScale, elapsedTime / growTime);
             elapsedTime += Time.deltaTime;
             yield return null;
-            // Debug.Log("From GrowStage");
         }
 
-        transform.localScale = tragetScale;
+        transform.localScale = targetScale;
+        
         // Keep the WallDot invisible even when changing states
         if (dotRenderer != null)
         {
@@ -75,7 +79,9 @@ public class WallDotMovement : MonoBehaviour
             invisibleColor.a = 0; // Keep alpha at zero
             dotRenderer.material.color = invisibleColor;
         }
+        
         isMoving = true;
+        OnSpawn?.Invoke(); // Invoke the OnSpawn event from master branch
     }
 
     void OnTriggerEnter(Collider other)
@@ -85,19 +91,20 @@ public class WallDotMovement : MonoBehaviour
             shrinking = true;
             StartCoroutine(ShrinkAndDestroy(Color.red));
             GameManager.Instance.TakeDamage(1);
-        } else if (other.CompareTag("Bullet"))
+        } 
+        else if (other.CompareTag("Bullet"))
         {
+            OnHit?.Invoke(); // Invoke the OnHit event from master branch
             StartCoroutine(ShrinkAndDestroy(Color.blue));
-            //Destroy(other.gameObject);
         }
     }
 
     IEnumerator ShrinkAndDestroy(Color shrinkColor)
     {
+        shrinking = true;
         float shrinkTime = 2.0f;
         float elapsedTime = 0f;
         Vector3 originalScale = transform.localScale;
-
 
         while (elapsedTime < shrinkTime)
         {
@@ -114,7 +121,17 @@ public class WallDotMovement : MonoBehaviour
             yield return null;
         }
 
+        OnDie?.Invoke(); // Invoke the OnDie event from master branch
         Destroy(gameObject);
+    }
+
+    /// <summary>
+    /// Allows external scripts to kill the bug with a custom color shrink.
+    /// </summary>
+    public void Kill(Color shrinkColor)
+    {
+        if (!shrinking)
+            StartCoroutine(ShrinkAndDestroy(shrinkColor));
     }
 
     public void ApplySpeedMultiplier(float multiplier, float duration)
@@ -129,6 +146,4 @@ public class WallDotMovement : MonoBehaviour
         yield return new WaitForSeconds(duration);
         speed = originalSpeed;
     }
-
-
 }
