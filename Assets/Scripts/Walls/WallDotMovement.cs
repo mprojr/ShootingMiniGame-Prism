@@ -1,6 +1,6 @@
 using UnityEngine;
+using System;
 using System.Collections;
-using UnityEngine.UIElements;
 
 public class WallDotMovement : MonoBehaviour
 {
@@ -10,16 +10,18 @@ public class WallDotMovement : MonoBehaviour
     private bool shrinking = false;
     private Renderer dotRenderer;
 
+    // Exposed events for custom behaviors
+    public event Action OnSpawn;
+    public event Action OnHit;
+    public event Action OnDie;
+
     void Start()
     {
         dotRenderer = GetComponent<Renderer>();
         if (playerCamera == null)
-        {
             playerCamera = GameObject.FindGameObjectWithTag("Player");
-            //Debug.Log("FOUND THE PLAYER FROM WALLDOTMOV");
-        }
-        speed = speed * GameManager.Instance.wallDotSpeedFactor;
-        Debug.Log($"New WallDot with Speed: {speed}");
+
+        speed *= GameManager.Instance.wallDotSpeedFactor;
         StartCoroutine(GrowStage());
     }
 
@@ -27,29 +29,30 @@ public class WallDotMovement : MonoBehaviour
     {
         if (isMoving && !shrinking)
         {
-            transform.position = Vector3.MoveTowards(transform.position, playerCamera.transform.position, speed * Time.deltaTime);
-        }       
+            transform.position = Vector3.MoveTowards(
+                transform.position,
+                playerCamera.transform.position,
+                speed * Time.deltaTime
+            );
+        }
     }
 
     IEnumerator GrowStage()
     {
-        float growTime = 3.0f;
-        float elapsedTime = 0f;
-        Vector3 initialScale = transform.localScale;
-        Vector3 tragetScale = initialScale * 2.0f;
-        // Debug.Log("From GrowStage");
+        float growTime = 3f, elapsed = 0f;
+        Vector3 init = transform.localScale, target = init * 2f;
 
-        while (elapsedTime < growTime)
+        while (elapsed < growTime)
         {
-            transform.localScale = Vector3.Lerp(initialScale, tragetScale, elapsedTime / growTime);
-            elapsedTime += Time.deltaTime;
+            transform.localScale = Vector3.Lerp(init, target, elapsed / growTime);
+            elapsed += Time.deltaTime;
             yield return null;
-            // Debug.Log("From GrowStage");
         }
 
-        transform.localScale = tragetScale;
-        dotRenderer.material.color = Color.yellow;
+        transform.localScale = target;
+        //dotRenderer.material.color = Color.yellow;
         isMoving = true;
+        OnSpawn?.Invoke();
     }
 
     void OnTriggerEnter(Collider other)
@@ -59,30 +62,42 @@ public class WallDotMovement : MonoBehaviour
             shrinking = true;
             StartCoroutine(ShrinkAndDestroy(Color.red));
             GameManager.Instance.TakeDamage(1);
-        } else if (other.CompareTag("Bullet"))
+        }
+        else if (other.CompareTag("Bullet"))
         {
+            OnHit?.Invoke();
             StartCoroutine(ShrinkAndDestroy(Color.blue));
-            //Destroy(other.gameObject);
         }
     }
 
     IEnumerator ShrinkAndDestroy(Color shrinkColor)
     {
-        float shrinkTime = 2.0f;
-        float elapsedTime = 0f;
-        Vector3 originalScale = transform.localScale;
+        shrinking = true;
+        float duration = 2f, elapsed = 0f;
+        Vector3 orig = transform.localScale;
 
-
-        while (elapsedTime < shrinkTime)
+        while (elapsed < duration)
         {
-            float progress = elapsedTime / shrinkTime;
-            transform.localScale = Vector3.Lerp(originalScale, Vector3.zero, progress);
-            dotRenderer.material.color = new Color(shrinkColor.r, shrinkColor.g, shrinkColor.b, 1 - progress); // Fade out
-            elapsedTime += Time.deltaTime;
+            float t = elapsed / duration;
+            transform.localScale = Vector3.Lerp(orig, Vector3.zero, t);
+            dotRenderer.material.color = new Color(
+                shrinkColor.r, shrinkColor.g, shrinkColor.b, 1 - t
+            );
+            elapsed += Time.deltaTime;
             yield return null;
         }
 
+        OnDie?.Invoke();
         Destroy(gameObject);
+    }
+
+    /// <summary>
+    /// Allows external scripts to kill the bug with a custom color shrink.
+    /// </summary>
+    public void Kill(Color shrinkColor)
+    {
+        if (!shrinking)
+            StartCoroutine(ShrinkAndDestroy(shrinkColor));
     }
 
     public void ApplySpeedMultiplier(float multiplier, float duration)
@@ -92,11 +107,9 @@ public class WallDotMovement : MonoBehaviour
 
     IEnumerator SpeedMultiplierRoutine(float multiplier, float duration)
     {
-        float originalSpeed = speed;
-        speed = originalSpeed * multiplier;
+        float original = speed;
+        speed = original * multiplier;
         yield return new WaitForSeconds(duration);
-        speed = originalSpeed;
+        speed = original;
     }
-
-
 }

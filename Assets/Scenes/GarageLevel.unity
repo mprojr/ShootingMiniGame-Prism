@@ -119,6 +119,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &5168296
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5168297}
+  m_Layer: 0
+  m_Name: TrackerAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5168297
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5168296}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1328359606}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &16893569
 GameObject:
   m_ObjectHideFlags: 0
@@ -3058,6 +3089,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 717520089}
   m_CullTransparentMesh: 1
+--- !u!1001 &752646901
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2149108367930539498, guid: 4a83114cbd7b829499fd1de5434ba1e5, type: 3}
+      propertyPath: m_Name
+      value: SpawnManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8263451921366020487, guid: 4a83114cbd7b829499fd1de5434ba1e5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8263451921366020487, guid: 4a83114cbd7b829499fd1de5434ba1e5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8263451921366020487, guid: 4a83114cbd7b829499fd1de5434ba1e5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8263451921366020487, guid: 4a83114cbd7b829499fd1de5434ba1e5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8263451921366020487, guid: 4a83114cbd7b829499fd1de5434ba1e5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8263451921366020487, guid: 4a83114cbd7b829499fd1de5434ba1e5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8263451921366020487, guid: 4a83114cbd7b829499fd1de5434ba1e5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8263451921366020487, guid: 4a83114cbd7b829499fd1de5434ba1e5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8263451921366020487, guid: 4a83114cbd7b829499fd1de5434ba1e5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8263451921366020487, guid: 4a83114cbd7b829499fd1de5434ba1e5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4a83114cbd7b829499fd1de5434ba1e5, type: 3}
 --- !u!1001 &768843990
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4038,8 +4126,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eb40d64cf8e4204e9b9b4e1ce15ef03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseDotCount: 60
-  baseSpawnDuration: 90
+  wallDotPrefab: {fileID: 0}
+  tankPrefab: {fileID: 0}
+  fastPrefab: {fileID: 0}
+  healthPrefab: {fileID: 0}
+  bossPrefab: {fileID: 0}
+  tankChance: 0.15
+  fastChance: 0.12
+  healthChance: 0.08
+  bossWave: 6
+  spawnInterval: 0.8
 --- !u!1 &1070940564
 GameObject:
   m_ObjectHideFlags: 0
@@ -4049,7 +4145,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1071438977}
-  - component: {fileID: 1071438978}
   m_Layer: 5
   m_Name: VRPointer
   m_TagString: Untagged
@@ -4063,14 +4158,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1071438976}
+  m_GameObject: {fileID: 1070940564}
   serializedVersion: 2
   m_LocalRotation: {x: 0.008970724, y: 0.6881231, z: 0.008508687, w: 0.7254886}
   m_LocalPosition: {x: 30.26834, y: 3.1996691, z: 3.6093884}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 53547683}
   - {fileID: 1662081302}
   m_Father: {fileID: 274027123}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4510,11 +4604,11 @@ Transform:
   - {fileID: 1524698013}
   - {fileID: 1094375445}
   - {fileID: 197702981}
-  - {fileID: 1070940565}
   - {fileID: 1922902949}
   - {fileID: 274027123}
   - {fileID: 306624586}
   - {fileID: 1574113409}
+  - {fileID: 5168297}
   m_Father: {fileID: 16893570}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1328864910
@@ -4805,7 +4899,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pausePanel: {fileID: 2074872548}
   pauseText: {fileID: 0}
-  resumeButton: {fileID: 1992946760}
+  resumeButton: {fileID: 0}
   settingsButton: {fileID: 2145549783}
   quitButton: {fileID: 1361811572}
   backgroundBlur: {fileID: 0}
@@ -4838,7 +4932,7 @@ MonoBehaviour:
   interactionButton: 16384
   vrMenuInteractor: {fileID: 451307254}
   playerObject: {fileID: 1149440103}
-  laserPointer: {fileID: 1071438976}
+  laserPointer: {fileID: 0}
   settingsPanel: {fileID: 0}
 --- !u!114 &1389626036
 MonoBehaviour:
@@ -6797,7 +6891,6 @@ RectTransform:
   m_LocalScale: {x: 1.59, y: 1.59, z: 1.59}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 1992946763}
   - {fileID: 2145549786}
   - {fileID: 1361811571}
   - {fileID: 717520090}
@@ -7234,3 +7327,4 @@ SceneRoots:
   - {fileID: 1703903306}
   - {fileID: 1815371848}
   - {fileID: 230038196}
+  - {fileID: 752646901}
